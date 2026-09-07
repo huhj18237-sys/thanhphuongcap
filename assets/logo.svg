@@ -1,14 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
   <title id="title">Thành Phương Cap</title>
-  <desc id="desc">Huy hiệu Thành Phương Cap với hình chiếc nón và chữ TP</desc>
-  <defs><linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff967b"/><stop offset="1" stop-color="#ff5f4e"/></linearGradient></defs>
-  <rect width="128" height="128" rx="30" fill="#101733"/>
-  <circle cx="64" cy="59" r="39" fill="#d9ff58" opacity=".16"/>
-  <path d="M28 65c2-21 16-35 36-35s34 14 36 35v7c-21 6-50 7-72 0Z" fill="#d9ff58"/>
-  <path d="M29 64c10 4 22 6 35 6s26-2 36-6" fill="none" stroke="#101733" stroke-width="3" stroke-linecap="round"/>
-  <path d="M64 32v34M47 39l10 21M81 39 71 60" fill="none" stroke="#101733" stroke-width="3.2" stroke-linecap="round" opacity=".72"/>
-  <text x="64" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="-1.5" fill="#101733">TP</text>
-  <path d="M28 70c19 6 49 7 73-1 9 1 13 5 8 10-16 14-66 17-91 4-8-4-7-9 10-13Z" fill="url(#coral)"/>
-  <path d="M29 77c20 8 54 8 75 0" fill="none" stroke="#101733" stroke-width="2.4" stroke-linecap="round"/>
-  <circle cx="64" cy="25" r="3" fill="#ff6b51"/>
+  <desc id="desc">Biểu tượng nón lưỡi trai Thành Phương Cap</desc>
+  <defs>
+    <linearGradient id="brim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff9a7d" />
+      <stop offset="1" stop-color="#ff604f" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="#101733" />
+  <path d="M24 67c1-24 17-40 40-40s39 16 40 40v9c-22 7-57 7-80 0Z" fill="#d9ff58" stroke="#101733" stroke-width="4" stroke-linejoin="round" />
+  <path d="M64 30v42M46 39l11 26M82 39 71 65" fill="none" stroke="#101733" stroke-width="3" stroke-linecap="round" opacity=".65" />
+  <circle cx="64" cy="27" r="4" fill="#ff6b51" stroke="#101733" stroke-width="2" />
+  <text x="64" y="61" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="-1.5" fill="#101733">TP</text>
+  <path d="M25 70c19 7 52 8 78-1 10 1 15 5 10 11-17 18-67 21-95 5-9-5-8-11 7-15Z" fill="url(#brim)" stroke="#101733" stroke-width="4" stroke-linejoin="round" />
+  <path d="M29 78c20 8 53 9 75 0" fill="none" stroke="#101733" stroke-width="2.5" stroke-linecap="round" opacity=".85" />
 </svg>

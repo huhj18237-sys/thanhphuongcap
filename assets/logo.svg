@@ -1,11 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
   <title id="title">Thành Phương Cap</title>
-  <desc id="desc">Biểu tượng chiếc nón cách điệu với đường may thủ công</desc>
-  <defs><linearGradient id="visor" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ff8068"/><stop offset="1" stop-color="#ff5b4b"/></linearGradient></defs>
-  <rect width="128" height="128" rx="32" fill="#101733"/>
-  <path d="M24 63c2-22 18-36 40-36s38 14 40 36v10H24Z" fill="#d9ff58"/>
-  <path d="M25 72c20 5 57 5 78 0l12 9c-21 18-80 18-102 0Z" fill="url(#visor)"/>
-  <path d="M64 30v34M48 37l9 22M80 37l-9 22" fill="none" stroke="#101733" stroke-width="5" stroke-linecap="round"/>
-  <path d="M46 84h36" fill="none" stroke="#101733" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="64" cy="63" r="5" fill="#101733"/>
+  <desc id="desc">Huy hiệu Thành Phương Cap với hình chiếc nón và chữ TP</desc>
+  <defs>
+    <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff9176"/>
+      <stop offset="1" stop-color="#ff604f"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="#101733"/>
+  <circle cx="64" cy="64" r="48" fill="none" stroke="#d9ff58" stroke-width="2" opacity=".55"/>
+  <path d="M29 62c2-21 16-34 35-34s33 13 35 34v9H29Z" fill="#d9ff58"/>
+  <path d="M29 62c8 4 19 6 35 6s27-2 35-6" fill="none" stroke="#101733" stroke-width="3" opacity=".8"/>
+  <path d="M64 31v33M47 38l10 22M81 38 71 60" fill="none" stroke="#101733" stroke-width="3.5" stroke-linecap="round" opacity=".75"/>
+  <text x="64" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="-1.5" fill="#101733">TP</text>
+  <path d="M27 69c16 5 45 6 74 0l10 8c-16 16-77 20-101 4-5-4-2-9 17-12Z" fill="url(#coral)"/>
+  <path d="M29 76c20 8 54 8 75 0" fill="none" stroke="#101733" stroke-width="2.5" stroke-linecap="round" opacity=".9"/>
+  <circle cx="64" cy="25" r="3" fill="#ff6b51"/>
 </svg>

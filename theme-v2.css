@@ -33,9 +33,9 @@ body{background:var(--paper);color:var(--ink)}
 .site-header{position:sticky;top:0;z-index:40;transition:background .3s ease,box-shadow .3s ease,backdrop-filter .3s ease}
 .site-header:not(:hover){background:rgba(248,248,255,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .site-header:hover{background:rgba(248,248,255,.95);box-shadow:0 12px 30px rgba(16,23,51,.08)}
-.brand-logo{width:42px;height:42px;display:block;filter:drop-shadow(4px 4px 0 #101733);transition:transform .3s ease}
+.brand-logo{width:42px;height:42px;display:block;object-fit:cover;border-radius:10px;filter:drop-shadow(4px 4px 0 #101733);transition:transform .3s ease}
 .brand:hover .brand-logo{transform:rotate(-6deg) translateY(-2px)}
-.site-footer .brand-logo{filter:none}
+.site-footer .brand-logo{filter:none;border-radius:8px}
 .stats-grid{margin-top:112px}.stats-grid strong{font-size:38px}.stats-grid span{font-size:13px}
 @media(max-width:900px){.stats-grid{margin-top:72px}.stats-grid strong{font-size:32px}}
 @media(max-width:560px){.stats-grid{margin-top:52px}.stats-grid strong{font-size:28px}.stats-grid span{font-size:12px}}

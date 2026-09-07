@@ -24,6 +24,22 @@ document.querySelectorAll('.desktop-nav a').forEach((link) => link.addEventListe
   menuToggle?.setAttribute('aria-expanded', 'false');
 }));
 
+const currentPage = document.body.dataset.page || window.location.pathname.split('/').pop() || 'index.html';
+document.querySelectorAll('.desktop-nav a[data-page]').forEach((link) => {
+  if (link.dataset.page === currentPage) link.classList.add('is-current');
+});
+
+const progressBar = document.createElement('div');
+progressBar.className = 'scroll-progress';
+progressBar.setAttribute('aria-hidden', 'true');
+document.body.prepend(progressBar);
+const updateProgress = () => {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = `${scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0}%`;
+};
+window.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
+
 document.querySelector('#quoteForm')?.addEventListener('submit', (event) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
@@ -51,5 +67,19 @@ if (heroVisual && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
   heroVisual.addEventListener('pointerleave', () => {
     heroVisual.style.setProperty('--tilt-x', '0deg');
     heroVisual.style.setProperty('--tilt-y', '0deg');
+  });
+}
+
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('[data-tilt]').forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(900px) rotateX(${y * -3.2}deg) rotateY(${x * 3.2}deg) translateY(-7px)`;
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.removeProperty('transform');
+    });
   });
 }

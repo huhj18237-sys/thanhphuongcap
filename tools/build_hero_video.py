@@ -1,4 +1,4 @@
-"""Build the original looping hero reel from Thành Phương Cap product assets."""
+"""Build a looping craft-story hero film for Thành Phương Cap."""
 
 from __future__ import annotations
 
@@ -8,23 +8,22 @@ from pathlib import Path
 
 import imageio_ffmpeg
 import numpy as np
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter
 
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "assets" / "hero-showcase.mp4"
 WIDTH, HEIGHT = 960, 720
 FPS = 24
-HOLD_FRAMES = 48
+HOLD_FRAMES = 60
 TRANSITION_FRAMES = 24
 SCENE_FRAMES = HOLD_FRAMES + TRANSITION_FRAMES
 
 SCENES = [
-    ("cap-black.png", (-0.10, 0.04), 0.060),
-    ("cap-trucker.png", (0.08, -0.06), 0.052),
-    ("cap-snapback.png", (-0.05, 0.08), 0.058),
-    ("cap-bucket-green.png", (0.07, 0.05), 0.050),
-    ("cap-other.png", (-0.07, -0.04), 0.055),
+    ("video-scenes/01-embroidery.jpg", (-0.08, 0.03), 0.065),
+    ("video-scenes/02-craft.jpg", (0.08, -0.04), 0.050),
+    ("video-scenes/03-construction.jpg", (-0.06, 0.04), 0.055),
+    ("video-scenes/04-packaging.jpg", (0.06, -0.03), 0.048),
 ]
 
 
@@ -76,6 +75,48 @@ def grade(frame: np.ndarray, frame_number: int, total_frames: int) -> np.ndarray
     return np.clip(frame, 0, 255).astype(np.uint8)
 
 
+def diagonal_story_wipe(current: np.ndarray, upcoming: np.ndarray, progress: float, reverse: bool) -> np.ndarray:
+    """Reveal the next chapter with a soft diagonal editorial wipe."""
+    yy, xx = np.mgrid[0:HEIGHT, 0:WIDTH]
+    diagonal = (xx / WIDTH) * 0.82 + (yy / HEIGHT) * 0.18
+    if reverse:
+        diagonal = 1.0 - diagonal
+    edge = -0.12 + progress * 1.24
+    feather = 0.09
+    mask = np.clip((edge - diagonal + feather) / feather, 0.0, 1.0)
+    return current * (1.0 - mask[..., None]) + upcoming * mask[..., None]
+
+
+def add_signature_thread(frame: np.ndarray, frame_number: int, total_frames: int) -> np.ndarray:
+    """Run one subtle champagne thread through every scene to unify the story."""
+    base = Image.fromarray(frame).convert("RGBA")
+    glow = Image.new("RGBA", base.size, (0, 0, 0, 0))
+    sharp = Image.new("RGBA", base.size, (0, 0, 0, 0))
+    glow_draw = ImageDraw.Draw(glow)
+    sharp_draw = ImageDraw.Draw(sharp)
+
+    points: list[tuple[int, int]] = []
+    for x in range(-80, WIDTH + 81, 5):
+        normalized = (x + 80) / (WIDTH + 160)
+        y = HEIGHT * (0.76 - 0.13 * math.sin(normalized * math.pi * 2.0 + 0.45))
+        y += HEIGHT * 0.035 * math.sin(normalized * math.pi * 5.0)
+        points.append((x, int(y)))
+
+    phase = frame_number / max(1, total_frames - 1)
+    head = max(2, min(len(points), int((phase * 1.16) * len(points))))
+    trail_start = max(0, head - int(len(points) * 0.34))
+    trail = points[trail_start:head]
+    if len(trail) > 1:
+        glow_draw.line(trail, fill=(246, 203, 120, 115), width=12)
+        sharp_draw.line(trail, fill=(255, 226, 164, 178), width=2)
+        x, y = trail[-1]
+        glow_draw.ellipse((x - 18, y - 18, x + 18, y + 18), fill=(255, 211, 124, 125))
+        sharp_draw.ellipse((x - 3, y - 3, x + 3, y + 3), fill=(255, 245, 214, 235))
+
+    glow = glow.filter(ImageFilter.GaussianBlur(8))
+    return np.asarray(Image.alpha_composite(Image.alpha_composite(base, glow), sharp).convert("RGB"))
+
+
 def main() -> None:
     images = [prepare_image(ROOT / "assets" / scene[0]) for scene in SCENES]
     total_frames = len(SCENES) * SCENE_FRAMES
@@ -113,9 +154,10 @@ def main() -> None:
             next_index = (scene_index + 1) % len(SCENES)
             next_image, next_pan, next_zoom = images[next_index], SCENES[next_index][1], SCENES[next_index][2]
             next_frame = render_scene(next_image, blend_progress * 0.08, next_pan, next_zoom)
-            frame = frame * (1.0 - blend_progress) + next_frame * blend_progress
+            frame = diagonal_story_wipe(frame, next_frame, blend_progress, scene_index % 2 == 1)
 
         frame = grade(frame, frame_number, total_frames)
+        frame = add_signature_thread(frame, frame_number, total_frames)
         process.stdin.write(frame.tobytes())
 
     process.stdin.close()

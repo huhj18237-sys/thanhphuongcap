@@ -27,11 +27,11 @@ document.querySelectorAll('.desktop-nav a').forEach((link) => link.addEventListe
 document.querySelector('#quoteForm')?.addEventListener('submit', (event) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  const subject = encodeURIComponent(`Website enquiry from ${data.get('name')}`);
-  const body = encodeURIComponent(`Name / Company: ${data.get('name')}\nEmail: ${data.get('email')}\nProduct: ${data.get('type')}\n\nProject details:\n${data.get('message')}`);
+  const subject = encodeURIComponent(`Yêu cầu báo giá nón từ ${data.get('name')}`);
+  const body = encodeURIComponent(`Họ tên / Công ty: ${data.get('name')}\nEmail: ${data.get('email')}\nDòng nón: ${data.get('type')}\n\nMô tả yêu cầu:\n${data.get('message')}`);
   window.location.href = `mailto:thanhphuongcap76@gmail.com?subject=${subject}&body=${body}`;
   const note = document.querySelector('#formNote');
-  if (note) note.textContent = 'Your email app is opening with the enquiry pre-filled.';
+  if (note) note.textContent = 'Ứng dụng email đang mở với nội dung yêu cầu đã được điền sẵn.';
 });
 
 window.addEventListener('scroll', () => {

@@ -1,5 +1,5 @@
 /*
-  Thành Phương Cap — atelier direction
+  THÀNH PHƯỢNG CAP — atelier direction
   A single visual layer on top of the base layout: midnight ink, champagne light,
   cobalt accents and restrained motion for a more premium, memorable first view.
 */
@@ -170,6 +170,7 @@ body::before {
 /* Bands and sections */
 .ticker { background: linear-gradient(90deg, var(--ink), #19245a, var(--ink)); padding: 21px 0; }
 .ticker-track { letter-spacing: .2em; }
+.ticker-track { animation-duration: 10s; }
 .ticker b { color: var(--champagne); }
 .section-pad { padding-top: clamp(96px, 10vw, 156px); padding-bottom: clamp(96px, 10vw, 156px); }
 .section-kicker { color: var(--champagne-deep); letter-spacing: .22em; }

@@ -42,7 +42,7 @@
   width: max-content;
   gap: 18px;
   padding: 10px 0 24px;
-  animation: productRunway 36s linear infinite;
+  animation: productRunway 18s linear infinite;
 }
 .product-rail-viewport:hover .product-rail-track { animation-play-state: paused; }
 .product-rail-card {

@@ -1,19 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
   <title id="title">Thành Phương Cap</title>
   <desc id="desc">Huy hiệu Thành Phương Cap với hình chiếc nón và chữ TP</desc>
-  <defs>
-    <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ff9176"/>
-      <stop offset="1" stop-color="#ff604f"/>
-    </linearGradient>
-  </defs>
+  <defs><linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff967b"/><stop offset="1" stop-color="#ff5f4e"/></linearGradient></defs>
   <rect width="128" height="128" rx="30" fill="#101733"/>
-  <circle cx="64" cy="64" r="48" fill="none" stroke="#d9ff58" stroke-width="2" opacity=".55"/>
-  <path d="M29 62c2-21 16-34 35-34s33 13 35 34v9H29Z" fill="#d9ff58"/>
-  <path d="M29 62c8 4 19 6 35 6s27-2 35-6" fill="none" stroke="#101733" stroke-width="3" opacity=".8"/>
-  <path d="M64 31v33M47 38l10 22M81 38 71 60" fill="none" stroke="#101733" stroke-width="3.5" stroke-linecap="round" opacity=".75"/>
-  <text x="64" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="-1.5" fill="#101733">TP</text>
-  <path d="M27 69c16 5 45 6 74 0l10 8c-16 16-77 20-101 4-5-4-2-9 17-12Z" fill="url(#coral)"/>
-  <path d="M29 76c20 8 54 8 75 0" fill="none" stroke="#101733" stroke-width="2.5" stroke-linecap="round" opacity=".9"/>
+  <circle cx="64" cy="59" r="39" fill="#d9ff58" opacity=".16"/>
+  <path d="M28 65c2-21 16-35 36-35s34 14 36 35v7c-21 6-50 7-72 0Z" fill="#d9ff58"/>
+  <path d="M29 64c10 4 22 6 35 6s26-2 36-6" fill="none" stroke="#101733" stroke-width="3" stroke-linecap="round"/>
+  <path d="M64 32v34M47 39l10 21M81 39 71 60" fill="none" stroke="#101733" stroke-width="3.2" stroke-linecap="round" opacity=".72"/>
+  <text x="64" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="-1.5" fill="#101733">TP</text>
+  <path d="M28 70c19 6 49 7 73-1 9 1 13 5 8 10-16 14-66 17-91 4-8-4-7-9 10-13Z" fill="url(#coral)"/>
+  <path d="M29 77c20 8 54 8 75 0" fill="none" stroke="#101733" stroke-width="2.4" stroke-linecap="round"/>
   <circle cx="64" cy="25" r="3" fill="#ff6b51"/>
 </svg>

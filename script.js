@@ -37,3 +37,19 @@ document.querySelector('#quoteForm')?.addEventListener('submit', (event) => {
 window.addEventListener('scroll', () => {
   document.querySelector('.site-header')?.classList.toggle('scrolled', window.scrollY > 10);
 }, { passive: true });
+
+// Subtle cursor depth on the hero image for a tactile, premium feel.
+const heroVisual = document.querySelector('.hero-visual');
+if (heroVisual && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  heroVisual.addEventListener('pointermove', (event) => {
+    const rect = heroVisual.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    heroVisual.style.setProperty('--tilt-x', `${x * 2.2}deg`);
+    heroVisual.style.setProperty('--tilt-y', `${y * -2.2}deg`);
+  });
+  heroVisual.addEventListener('pointerleave', () => {
+    heroVisual.style.setProperty('--tilt-x', '0deg');
+    heroVisual.style.setProperty('--tilt-y', '0deg');
+  });
+}

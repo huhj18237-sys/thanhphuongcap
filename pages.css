@@ -103,8 +103,9 @@
 }
 .desktop-nav a.is-current { color: var(--champagne-deep); }
 .desktop-nav a.is-current::after { right: 0; }
-.hero-image { transform: perspective(1100px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg)) rotate(1.2deg) translateZ(0); }
+.hero-image { overflow: hidden; transform: perspective(1100px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg)) rotate(1.2deg) translateZ(0); }
 .hero-visual:hover .hero-image { transform: perspective(1100px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg)) rotate(0deg) scale(1.02); }
+.hero-video { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; pointer-events: none; }
 .capability-card[data-tilt], .collection-tile[data-tilt] { transform-style: preserve-3d; will-change: transform; }
 
 /* Standalone page shell */

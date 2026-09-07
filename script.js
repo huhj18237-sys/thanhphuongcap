@@ -83,3 +83,14 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     });
   });
 }
+
+const heroVideo = document.querySelector('.hero-video');
+if (heroVideo) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    heroVideo.pause();
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) heroVideo.pause();
+    else if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) heroVideo.play().catch(() => {});
+  });
+}

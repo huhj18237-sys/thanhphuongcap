@@ -1,7 +1,7 @@
 const gmailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=thanhphuongcap76%40gmail.com';
 const contactMarkup = `
   <a class="contact-icon zalo" href="https://zalo.me/0906607633" target="_blank" rel="noreferrer" aria-label="Liên hệ Zalo" title="Zalo">
-    <span class="zalo-mark" aria-hidden="true">Zalo</span>
+    <span class="zalo-mark" aria-hidden="true" data-i18n-ignore>Zalo</span>
   </a>
   <a class="contact-icon gmail" href="${gmailComposeUrl}" target="_blank" rel="noreferrer" aria-label="Mở Gmail để gửi thư" title="Gmail">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5 12 13l8.5-6.5" fill="none" stroke="#EA4335" stroke-width="2.5"/><path d="M3.5 6.5v11h4V9.6" fill="none" stroke="#4285F4" stroke-width="2.5"/><path d="M20.5 6.5v11h-4V9.6" fill="none" stroke="#34A853" stroke-width="2.5"/><path d="M3.5 6.5 7 9.2" stroke="#FBBC04" stroke-width="2.5"/></svg>
@@ -22,7 +22,7 @@ document.querySelectorAll('.contact-actions,.footer-social').forEach((dock) => {
   }
 });
 
-const mapDestination = encodeURIComponent('THÀNH PHƯỢNG CAP, 12B Tân Thới Nhất 1, Tổ 1, Khu phố 1, Phường Đông Hưng Thuận, TP. Hồ Chí Minh, Việt Nam');
+const mapDestination = encodeURIComponent('12B Tân Thới Nhất 1, Tổ 1, Khu phố 1, Phường Đông Hưng Thuận, TP. Hồ Chí Minh, Việt Nam');
 document.querySelectorAll('.footer-contact').forEach((contact) => {
   contact.innerHTML = `<span class="footer-label">Liên hệ trực tiếp</span>
     <a class="footer-contact-row" href="${gmailComposeUrl}" target="_blank" rel="noreferrer" aria-label="Mở Gmail để gửi thư đến THÀNH PHƯỢNG CAP">
@@ -128,14 +128,6 @@ quickContactToggle.addEventListener('click', () => {
 document.addEventListener('click', (event) => {
   if (!quickContact.contains(event.target)) closeQuickContact();
 });
-
-const backToTop = document.createElement('button');
-backToTop.className = 'back-to-top';
-backToTop.type = 'button';
-backToTop.setAttribute('aria-label', 'Lên đầu trang');
-backToTop.innerHTML = '<span aria-hidden="true">TP</span>';
-document.body.append(backToTop);
-backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 const sourceText = new WeakMap();
 const sourceAttributes = new WeakMap();
@@ -313,10 +305,11 @@ document.querySelector('#quoteForm')?.addEventListener('submit', async (event) =
   }
 });
 
-window.addEventListener('scroll', () => {
+const updateStickyHeader = () => {
   document.querySelector('.site-header')?.classList.toggle('scrolled', window.scrollY > 10);
-  backToTop.classList.toggle('is-visible', window.scrollY > 520);
-}, { passive: true });
+};
+window.addEventListener('scroll', updateStickyHeader, { passive: true });
+updateStickyHeader();
 
 // Subtle cursor depth on the hero image for a tactile, premium feel.
 const heroVisual = document.querySelector('.hero-visual');

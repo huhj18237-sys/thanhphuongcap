@@ -31,7 +31,7 @@ document.querySelectorAll('.footer-contact').forEach((contact) => {
     <a class="footer-contact-row" href="tel:+84906607633" aria-label="Gọi THÀNH PHƯỢNG CAP theo số 0906 607 633">
       <span class="footer-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7.1 3.2 10 8 8.2 9.6c1.1 2.7 3.2 4.8 5.8 5.9l1.7-1.9 4.8 2.9c-.8 3.1-2.8 4.6-5.7 4C8.9 19.3 4.2 14.6 3 8.7c-.6-2.9 1-4.8 4.1-5.5Z"/></svg></span><span><small>Gọi ngay</small>0906 607 633</span>
     </a>
-    <a class="footer-contact-row" href="https://www.google.com/maps/dir/?api=1&amp;destination=${mapDestination}&amp;travelmode=driving" target="_blank" rel="noreferrer" aria-label="Mở chỉ đường đến THÀNH PHƯỢNG CAP trên Google Maps">
+    <a class="footer-contact-row" href="https://www.google.com/maps/search/?api=1&amp;query=${mapDestination}" target="_blank" rel="noreferrer" aria-label="Tìm địa chỉ THÀNH PHƯỢNG CAP trên Google Maps">
       <span class="footer-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z"/><circle cx="12" cy="10" r="2.2"/></svg></span><span><small>Chỉ đường Google Maps</small>12B Tân Thới Nhất 1, Tổ 1, Khu phố 1,<br />Phường Đông Hưng Thuận, TP. Hồ Chí Minh</span>
     </a>`;
 });

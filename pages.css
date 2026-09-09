@@ -538,10 +538,11 @@ body:not(.page-body) .section-kicker::before { content: ''; width: 34px; height:
   width: calc(100% + 16vw);
   margin: -92px -8vw 75px;
   overflow: hidden;
+  border-top: 1px solid rgba(9,17,39,.18);
   border-bottom: 1px solid rgba(243,215,154,.35);
   background: var(--lime);
   color: #091127;
-  transform: rotate(-1deg);
+  transform: none;
 }
 .footer-marquee-track { width: max-content; display: flex; align-items: center; gap: 28px; padding: 15px 0; animation: footerRun 15s linear infinite; font: 700 11px var(--display); letter-spacing: .18em; text-transform: uppercase; }
 .footer-marquee-track b { color: var(--coral); font-size: 18px; }

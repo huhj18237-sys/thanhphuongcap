@@ -171,7 +171,7 @@ body::before {
   background: rgba(255,255,255,.96);
   border: 0;
   box-shadow: 0 16px 34px rgba(9,17,39,.28), 0 0 0 1px rgba(255,255,255,.72);
-  animation: none;
+  animation: stampOrbit 8s linear infinite;
 }
 .circle-stamp::before {
   content: '';
@@ -181,7 +181,7 @@ body::before {
   border-radius: inherit;
   background: conic-gradient(from 0deg,var(--lime),var(--champagne),var(--coral),#7a5cff,var(--lime));
   box-shadow: 0 0 0 3px var(--ink), 0 0 24px rgba(216,255,63,.35);
-  animation: stampOrbit 7s linear infinite;
+  animation: none;
 }
 .circle-stamp::after {
   content: '';
@@ -191,7 +191,7 @@ body::before {
   border-radius: inherit;
   background: #fbf8f1;
 }
-.circle-stamp img { width: 73px; height: 73px; object-fit: cover; border-radius: 50%; clip-path: circle(47%); box-shadow: none; }
+.circle-stamp img { width: 73px; height: 73px; object-fit: contain; border-radius: 18px; clip-path: none; box-shadow: 0 5px 12px rgba(9,17,39,.16); }
 @keyframes stampOrbit { to { transform: rotate(360deg); } }
 
 /* Bands and sections */
@@ -373,5 +373,5 @@ body::before {
   .footer-bottom span:nth-child(2), .footer-bottom a { justify-self: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-visual::before, .floating-card, .circle-stamp::before { animation: none !important; }
+  .hero-visual::before, .floating-card, .circle-stamp, .circle-stamp::before { animation: none !important; }
 }

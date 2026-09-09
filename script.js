@@ -1,8 +1,9 @@
+const gmailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=thanhphuongcap76%40gmail.com';
 const contactMarkup = `
   <a class="contact-icon zalo" href="https://zalo.me/0906607633" target="_blank" rel="noreferrer" aria-label="Liên hệ Zalo" title="Zalo">
     <span class="zalo-mark" aria-hidden="true">Zalo</span>
   </a>
-  <a class="contact-icon gmail" href="mailto:thanhphuongcap76@gmail.com" aria-label="Gửi Gmail" title="Gmail">
+  <a class="contact-icon gmail" href="${gmailComposeUrl}" target="_blank" rel="noreferrer" aria-label="Mở Gmail để gửi thư" title="Gmail">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5 12 13l8.5-6.5" fill="none" stroke="#EA4335" stroke-width="2.5"/><path d="M3.5 6.5v11h4V9.6" fill="none" stroke="#4285F4" stroke-width="2.5"/><path d="M20.5 6.5v11h-4V9.6" fill="none" stroke="#34A853" stroke-width="2.5"/><path d="M3.5 6.5 7 9.2" stroke="#FBBC04" stroke-width="2.5"/></svg>
   </a>
   <a class="contact-icon whatsapp" href="https://wa.me/84906607633?text=Xin%20ch%C3%A0o%20TH%C3%80NH%20PH%C6%AF%E1%BB%A2NG%20CAP%2C%20t%C3%B4i%20mu%E1%BB%91n%20%C4%91%C6%B0%E1%BB%A3c%20t%C6%B0%20v%E1%BA%A5n." target="_blank" rel="noreferrer" aria-label="Liên hệ WhatsApp" title="WhatsApp">
@@ -24,7 +25,7 @@ document.querySelectorAll('.contact-actions,.footer-social').forEach((dock) => {
 const mapDestination = encodeURIComponent('12B Tân Thới Nhất 1, Tổ 1, Khu phố 1, Phường Đông Hưng Thuận, TP. Hồ Chí Minh');
 document.querySelectorAll('.footer-contact').forEach((contact) => {
   contact.innerHTML = `<span class="footer-label">Liên hệ trực tiếp</span>
-    <a class="footer-contact-row" href="mailto:thanhphuongcap76@gmail.com" aria-label="Gửi email đến THÀNH PHƯỢNG CAP">
+    <a class="footer-contact-row" href="${gmailComposeUrl}" target="_blank" rel="noreferrer" aria-label="Mở Gmail để gửi thư đến THÀNH PHƯỢNG CAP">
       <span class="footer-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 6.5h17v11h-17zM4 7l8 6 8-6"/></svg></span><span><small>Email</small>thanhphuongcap76@gmail.com</span>
     </a>
     <a class="footer-contact-row" href="tel:+84906607633" aria-label="Gọi THÀNH PHƯỢNG CAP theo số 0906 607 633">

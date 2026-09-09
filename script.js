@@ -22,7 +22,7 @@ document.querySelectorAll('.contact-actions,.footer-social').forEach((dock) => {
   }
 });
 
-const mapDestination = encodeURIComponent('12B Tân Thới Nhất 1, Tổ 1, Khu phố 1, Phường Đông Hưng Thuận, TP. Hồ Chí Minh, Việt Nam');
+const mapDestination = encodeURIComponent('12B Tân Thới Nhất 1, Tổ 1, Khu phố 1, Phường Đông Hưng Thuận, TP. Hồ Chí Minh');
 document.querySelectorAll('.footer-contact').forEach((contact) => {
   contact.innerHTML = `<span class="footer-label">Liên hệ trực tiếp</span>
     <a class="footer-contact-row" href="${gmailComposeUrl}" target="_blank" rel="noreferrer" aria-label="Mở Gmail để gửi thư đến THÀNH PHƯỢNG CAP">

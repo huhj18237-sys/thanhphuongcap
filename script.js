@@ -5,7 +5,7 @@ const contactMarkup = `
   <a class="contact-icon gmail" href="mailto:thanhphuongcap76@gmail.com" aria-label="Gửi Gmail" title="Gmail">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5 12 13l8.5-6.5" fill="none" stroke="#EA4335" stroke-width="2.5"/><path d="M3.5 6.5v11h4V9.6" fill="none" stroke="#4285F4" stroke-width="2.5"/><path d="M20.5 6.5v11h-4V9.6" fill="none" stroke="#34A853" stroke-width="2.5"/><path d="M3.5 6.5 7 9.2" stroke="#FBBC04" stroke-width="2.5"/></svg>
   </a>
-  <a class="contact-icon whatsapp" href="https://wa.me/84906607633" target="_blank" rel="noreferrer" aria-label="Liên hệ WhatsApp" title="WhatsApp">
+  <a class="contact-icon whatsapp" href="https://wa.me/84906607633?text=Xin%20ch%C3%A0o%20TH%C3%80NH%20PH%C6%AF%E1%BB%A2NG%20CAP%2C%20t%C3%B4i%20mu%E1%BB%91n%20%C4%91%C6%B0%E1%BB%A3c%20t%C6%B0%20v%E1%BA%A5n." target="_blank" rel="noreferrer" aria-label="Liên hệ WhatsApp" title="WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 11.7a8.1 8.1 0 0 1-11.9 7.1L4 20.2l1.4-4.3a8.1 8.1 0 1 1 15-4.2Z" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M8.8 7.8c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.5l.8 1.9c.1.3 0 .5-.2.8l-.7.8c.8 1.5 1.9 2.6 3.5 3.3l.8-.9c.2-.3.5-.3.8-.2l1.9.9c.3.1.4.3.4.6-.1 1.2-.8 2.1-2 2.3-1.2.2-3.4-.5-5.4-2.2-1.7-1.5-2.8-3.6-2.9-5 0-1 .5-1.8 1.2-2.3Z" fill="#fff"/></svg>
   </a>
   <a class="contact-icon phone" href="tel:+84906607633" aria-label="Gọi số di động" title="0906 607 633">
@@ -19,6 +19,20 @@ document.querySelectorAll('.contact-actions,.footer-social').forEach((dock) => {
       item.classList.replace('contact-icon', 'footer-social-icon');
     });
   }
+});
+
+const mapDestination = encodeURIComponent('12B Tân Thới Nhất 1, Tổ 1, Khu phố 1, Phường Đông Hưng Thuận, TP. Hồ Chí Minh');
+document.querySelectorAll('.footer-contact').forEach((contact) => {
+  contact.innerHTML = `<span class="footer-label">Liên hệ trực tiếp</span>
+    <a class="footer-contact-row" href="mailto:thanhphuongcap76@gmail.com" aria-label="Gửi email đến THÀNH PHƯỢNG CAP">
+      <span class="footer-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 6.5h17v11h-17zM4 7l8 6 8-6"/></svg></span><span><small>Email</small>thanhphuongcap76@gmail.com</span>
+    </a>
+    <a class="footer-contact-row" href="tel:+84906607633" aria-label="Gọi THÀNH PHƯỢNG CAP theo số 0906 607 633">
+      <span class="footer-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7.1 3.2 10 8 8.2 9.6c1.1 2.7 3.2 4.8 5.8 5.9l1.7-1.9 4.8 2.9c-.8 3.1-2.8 4.6-5.7 4C8.9 19.3 4.2 14.6 3 8.7c-.6-2.9 1-4.8 4.1-5.5Z"/></svg></span><span><small>Gọi ngay</small>0906 607 633</span>
+    </a>
+    <a class="footer-contact-row" href="https://www.google.com/maps/dir/?api=1&amp;destination=${mapDestination}" target="_blank" rel="noreferrer" aria-label="Mở chỉ đường đến THÀNH PHƯỢNG CAP trên Google Maps">
+      <span class="footer-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z"/><circle cx="12" cy="10" r="2.2"/></svg></span><span><small>Chỉ đường Google Maps</small>12B Tân Thới Nhất 1, Tổ 1, Khu phố 1,<br />Phường Đông Hưng Thuận, TP. Hồ Chí Minh</span>
+    </a>`;
 });
 
 const localeOptions = [
@@ -219,14 +233,43 @@ const updateProgress = () => {
 window.addEventListener('scroll', updateProgress, { passive: true });
 updateProgress();
 
-document.querySelector('#quoteForm')?.addEventListener('submit', (event) => {
+document.querySelector('#quoteForm')?.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const data = new FormData(event.currentTarget);
+  const form = event.currentTarget;
+  const data = new FormData(form);
   const subject = encodeURIComponent(`Yêu cầu báo giá nón từ ${data.get('name')}`);
   const body = encodeURIComponent(`Họ tên / Công ty: ${data.get('name')}\nEmail: ${data.get('email')}\nDòng nón: ${data.get('type')}\n\nMô tả yêu cầu:\n${data.get('message')}`);
-  window.location.href = `mailto:thanhphuongcap76@gmail.com?subject=${subject}&body=${body}`;
   const note = document.querySelector('#formNote');
-  if (note) note.textContent = 'Ứng dụng email đang mở với nội dung yêu cầu đã được điền sẵn.';
+  const button = form.querySelector('button[type="submit"]');
+  const buttonContent = button.innerHTML;
+  const localize = (message) => window.TPC_I18N?.[normalizeLocale(document.documentElement.lang)]?.[message] || message;
+  button.disabled = true;
+  button.textContent = localize('Đang gửi yêu cầu...');
+  note?.classList.remove('is-success', 'is-error');
+  try {
+    const response = await fetch('/api/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(data.entries()))
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.message || 'Submission failed');
+    if (note) {
+      note.textContent = localize('Yêu cầu đã được gửi thành công. Chúng tôi sẽ liên hệ lại với bạn sớm.');
+      note.classList.add('is-success');
+    }
+    form.reset();
+  } catch (error) {
+    console.error('Quote submission failed', error);
+    if (note) {
+      note.textContent = localize('Chưa thể gửi trực tiếp. Ứng dụng email đang được mở để bạn gửi yêu cầu.');
+      note.classList.add('is-error');
+    }
+    window.location.href = `mailto:thanhphuongcap76@gmail.com?subject=${subject}&body=${body}`;
+  } finally {
+    button.disabled = false;
+    button.innerHTML = buttonContent;
+  }
 });
 
 window.addEventListener('scroll', () => {

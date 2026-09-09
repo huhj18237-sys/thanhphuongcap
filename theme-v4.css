@@ -337,6 +337,7 @@ body::before {
 .footer-bottom span:nth-child(2) { justify-self: center; }
 .footer-bottom a { justify-self: end; }
 .footer-bottom a { color: var(--lime); font-weight: 700; }
+.footer-bottom > a { display: none !important; }
 
 /* Motion and accessibility */
 .reveal { transform: translateY(34px); }

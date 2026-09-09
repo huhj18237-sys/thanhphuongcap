@@ -21,6 +21,7 @@ document.querySelectorAll('.contact-actions,.footer-social').forEach((dock) => {
     });
   }
 });
+document.querySelectorAll('.footer-bottom > a').forEach((link) => link.remove());
 
 const mapDestination = encodeURIComponent('12B Tân Thới Nhất 1, Tổ 1, Khu phố 1, Phường Đông Hưng Thuận, TP. Hồ Chí Minh');
 document.querySelectorAll('.footer-contact').forEach((contact) => {

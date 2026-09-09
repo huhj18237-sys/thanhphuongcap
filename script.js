@@ -44,6 +44,53 @@ languageSwitcher.dataset.i18nIgnore = '';
 languageSwitcher.innerHTML = `<button class="language-button" type="button" aria-expanded="false" aria-label="Chọn ngôn ngữ"><span class="flag">${flagMarkup('vi')}</span><span class="language-code">VI</span><span class="chevron"></span></button><div class="language-menu" role="menu">${localeOptions.map((locale) => `<button class="language-option" type="button" role="menuitem" data-locale="${locale.code}"><span class="flag">${flagMarkup(locale.code)}</span><span>${locale.label}</span><span class="check">✓</span></button>`).join('')}</div>`;
 document.querySelector('.site-header .contact-actions')?.after(languageSwitcher);
 
+const footer = document.querySelector('.site-footer');
+if (footer) {
+  const footerServices = [
+    'Nón thiết kế theo yêu cầu',
+    'Thêu logo chính xác',
+    'Private label trọn gói',
+    'Sản xuất linh hoạt',
+    'Giao hàng trong & ngoài nước'
+  ];
+  const footerMarquee = document.createElement('div');
+  footerMarquee.className = 'footer-marquee';
+  footerMarquee.setAttribute('aria-label', 'Dịch vụ nổi bật');
+  footerMarquee.innerHTML = `<div class="footer-marquee-track" aria-hidden="true">${[...footerServices, ...footerServices].map((service) => `<span>${service}</span><b>✦</b>`).join('')}</div>`;
+  footer.prepend(footerMarquee);
+  footer.addEventListener('pointermove', (event) => {
+    const rect = footer.getBoundingClientRect();
+    footer.style.setProperty('--footer-x', `${((event.clientX - rect.left) / rect.width) * 100}%`);
+    footer.style.setProperty('--footer-y', `${((event.clientY - rect.top) / rect.height) * 100}%`);
+  });
+}
+
+const quickContact = document.createElement('div');
+quickContact.className = 'quick-contact';
+quickContact.innerHTML = `<div class="quick-contact-panel" aria-label="Liên hệ nhanh">${contactMarkup}</div><button class="quick-contact-toggle" type="button" aria-expanded="false" aria-label="Mở liên hệ nhanh"><span aria-hidden="true">+</span></button>`;
+document.body.append(quickContact);
+
+const quickContactToggle = quickContact.querySelector('.quick-contact-toggle');
+const closeQuickContact = () => {
+  quickContact.classList.remove('is-open');
+  quickContactToggle.setAttribute('aria-expanded', 'false');
+};
+quickContactToggle.addEventListener('click', () => {
+  const open = quickContact.classList.toggle('is-open');
+  quickContactToggle.setAttribute('aria-expanded', String(open));
+});
+document.addEventListener('click', (event) => {
+  if (!quickContact.contains(event.target)) closeQuickContact();
+});
+
+const backToTop = document.createElement('button');
+backToTop.className = 'back-to-top';
+backToTop.type = 'button';
+backToTop.setAttribute('aria-label', 'Lên đầu trang');
+backToTop.innerHTML = '<span aria-hidden="true">↑</span>';
+document.body.append(backToTop);
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
 const sourceText = new WeakMap();
 const sourceAttributes = new WeakMap();
 const sourceDocumentTitle = document.title;
@@ -126,6 +173,7 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
     languageSwitcher.classList.remove('is-open');
     languageButton.setAttribute('aria-expanded', 'false');
+    closeQuickContact();
   }
 });
 
@@ -183,6 +231,7 @@ document.querySelector('#quoteForm')?.addEventListener('submit', (event) => {
 
 window.addEventListener('scroll', () => {
   document.querySelector('.site-header')?.classList.toggle('scrolled', window.scrollY > 10);
+  backToTop.classList.toggle('is-visible', window.scrollY > 520);
 }, { passive: true });
 
 // Subtle cursor depth on the hero image for a tactile, premium feel.
@@ -213,6 +262,35 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       card.style.removeProperty('transform');
     });
   });
+
+  document.querySelectorAll('.button,.header-cta').forEach((button) => {
+    button.classList.add('magnetic');
+    button.addEventListener('pointermove', (event) => {
+      const rect = button.getBoundingClientRect();
+      const x = event.clientX - rect.left - rect.width / 2;
+      const y = event.clientY - rect.top - rect.height / 2;
+      button.style.transform = `translate(${x * 0.08}px,${y * 0.12}px)`;
+    });
+    button.addEventListener('pointerleave', () => button.style.removeProperty('transform'));
+  });
+
+  const parallaxFrames = [...document.querySelectorAll('.image-frame:not(.hero-image)')];
+  let parallaxTicking = false;
+  const updateParallax = () => {
+    parallaxFrames.forEach((frame) => {
+      const rect = frame.getBoundingClientRect();
+      const distance = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
+      frame.style.setProperty('--parallax-y', `${Math.max(-24, Math.min(24, distance * -24))}px`);
+    });
+    parallaxTicking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!parallaxTicking) {
+      requestAnimationFrame(updateParallax);
+      parallaxTicking = true;
+    }
+  }, { passive: true });
+  updateParallax();
 }
 
 const heroVideo = document.querySelector('.hero-video');

@@ -5,7 +5,10 @@ const root = process.cwd();
 const files = ['index.html', 'nang-luc.html', 'san-pham.html', 'quy-trinh.html', 'gioi-thieu.html'];
 const extraStrings = [
   'Liên hệ Zalo', 'Gửi Gmail', 'Liên hệ WhatsApp', 'Gọi số di động',
-  'Ứng dụng email đang mở với nội dung yêu cầu đã được điền sẵn.'
+  'Ứng dụng email đang mở với nội dung yêu cầu đã được điền sẵn.',
+  'Dịch vụ nổi bật', 'Nón thiết kế theo yêu cầu', 'Thêu logo chính xác',
+  'Private label trọn gói', 'Sản xuất linh hoạt', 'Giao hàng trong & ngoài nước',
+  'Mở liên hệ nhanh', 'Lên đầu trang'
 ];
 const decodeEntities = (value) => value
   .replaceAll('&amp;', '&').replaceAll('&nbsp;', ' ').replaceAll('&#39;', "'")

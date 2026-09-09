@@ -2,6 +2,8 @@
 window.TPC_I18N = {
   "vi": {},
   "en": {
+    "Số điện thoại": "Phone number",
+    "Nhập số điện thoại": "Enter your phone number",
     "Dịch vụ nổi bật": "Featured services",
     "Nón thiết kế theo yêu cầu": "Custom-designed caps",
     "Thêu logo chính xác": "Precision logo embroidery",
@@ -414,6 +416,8 @@ window.TPC_I18N = {
     "Nón trẻ em màu vàng phối vành xanh navy": "Yellow children's hat with navy blue brim"
   },
   "ja": {
+    "Số điện thoại": "電話番号",
+    "Nhập số điện thoại": "電話番号を入力してください",
     "Dịch vụ nổi bật": "注目のサービス",
     "Nón thiết kế theo yêu cầu": "オーダーメイドキャップ",
     "Thêu logo chính xác": "高精度ロゴ刺繍",
@@ -826,6 +830,8 @@ window.TPC_I18N = {
     "Nón trẻ em màu vàng phối vành xanh navy": "紺色のつばが付いた黄色の子供用帽子"
   },
   "ko": {
+    "Số điện thoại": "전화번호",
+    "Nhập số điện thoại": "전화번호를 입력하세요",
     "Dịch vụ nổi bật": "주요 서비스",
     "Nón thiết kế theo yêu cầu": "맞춤 디자인 캡",
     "Thêu logo chính xác": "정밀 로고 자수",
@@ -1238,6 +1244,8 @@ window.TPC_I18N = {
     "Nón trẻ em màu vàng phối vành xanh navy": "남색 챙이 있는 노란색 어린이 모자"
   },
   "fr": {
+    "Số điện thoại": "Numéro de téléphone",
+    "Nhập số điện thoại": "Saisissez votre numéro de téléphone",
     "Dịch vụ nổi bật": "Services phares",
     "Nón thiết kế theo yêu cầu": "Casquettes sur mesure",
     "Thêu logo chính xác": "Broderie de logo de précision",
@@ -1650,6 +1658,8 @@ window.TPC_I18N = {
     "Nón trẻ em màu vàng phối vành xanh navy": "Chapeau enfant jaune à bord bleu marine"
   },
   "zh": {
+    "Số điện thoại": "电话号码",
+    "Nhập số điện thoại": "请输入电话号码",
     "Dịch vụ nổi bật": "特色服务",
     "Nón thiết kế theo yêu cầu": "定制设计帽款",
     "Thêu logo chính xác": "精准标志刺绣",

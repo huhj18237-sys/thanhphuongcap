@@ -263,7 +263,7 @@ document.querySelector('#quoteForm')?.addEventListener('submit', async (event) =
   const form = event.currentTarget;
   const data = new FormData(form);
   const subject = encodeURIComponent(`Yêu cầu báo giá nón từ ${data.get('name')}`);
-  const body = encodeURIComponent(`Họ tên / Công ty: ${data.get('name')}\nEmail: ${data.get('email')}\nDòng nón: ${data.get('type')}\n\nMô tả yêu cầu:\n${data.get('message')}`);
+  const body = encodeURIComponent(`Họ tên / Công ty: ${data.get('name')}\nEmail: ${data.get('email')}\nSố điện thoại: ${data.get('phone')}\nDòng nón: ${data.get('type')}\n\nMô tả yêu cầu:\n${data.get('message')}`);
   const mailHref = `mailto:thanhphuongcap76@gmail.com?subject=${subject}&body=${body}`;
   const note = document.querySelector('#formNote');
   const button = form.querySelector('button[type="submit"]');
@@ -279,6 +279,7 @@ document.querySelector('#quoteForm')?.addEventListener('submit', async (event) =
       body: JSON.stringify({
         name: data.get('name'),
         email: data.get('email'),
+        phone: data.get('phone'),
         type: data.get('type'),
         message: data.get('message') || 'Khách hàng chưa nhập mô tả.',
         _subject: `Yêu cầu báo giá mới từ ${data.get('name')}`,

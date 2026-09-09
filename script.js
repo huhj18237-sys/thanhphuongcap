@@ -1,6 +1,6 @@
 const contactMarkup = `
   <a class="contact-icon zalo" href="https://zalo.me/0906607633" target="_blank" rel="noreferrer" aria-label="Liên hệ Zalo" title="Zalo">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M5 4h14a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-6.1L8 20v-3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"/><text x="12" y="13.2" fill="#1688ff" font-size="6.2" font-family="Arial,sans-serif" font-weight="800" text-anchor="middle">Zalo</text></svg>
+    <span class="zalo-mark" aria-hidden="true">Zalo</span>
   </a>
   <a class="contact-icon gmail" href="mailto:thanhphuongcap76@gmail.com" aria-label="Gửi Gmail" title="Gmail">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5 12 13l8.5-6.5" fill="none" stroke="#EA4335" stroke-width="2.5"/><path d="M3.5 6.5v11h4V9.6" fill="none" stroke="#4285F4" stroke-width="2.5"/><path d="M20.5 6.5v11h-4V9.6" fill="none" stroke="#34A853" stroke-width="2.5"/><path d="M3.5 6.5 7 9.2" stroke="#FBBC04" stroke-width="2.5"/></svg>
@@ -34,6 +34,37 @@ document.querySelectorAll('.footer-contact').forEach((contact) => {
       <span class="footer-contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z"/><circle cx="12" cy="10" r="2.2"/></svg></span><span><small>Chỉ đường Google Maps</small>12B Tân Thới Nhất 1, Tổ 1, Khu phố 1,<br />Phường Đông Hưng Thuận, TP. Hồ Chí Minh</span>
     </a>`;
 });
+
+// Keep the newly added catalogue lines translated even before the next dictionary build.
+const productLocaleAdditions = {
+  en: {
+    'Khám phá 15 dòng nón': 'Explore 15 hat lines', 'Mười lăm form khác biệt.': 'Fifteen distinctive forms.',
+    'Nón tai bèo': 'Boonie hat', 'Vành mềm, che nắng tốt và mang tinh thần dã ngoại hiện đại cho chiến dịch ngoài trời.': 'A soft brim with reliable sun coverage and a modern outdoor spirit.', 'Ripstop nhẹ, nhanh khô': 'Lightweight quick-dry ripstop', 'Dây giữ và khóa điều chỉnh': 'Chin cord and adjustable toggle', 'Khoen thoáng khí chống ẩm': 'Breathable moisture-resistant eyelets',
+    'Nón thủy thủ': 'Sailor cap', 'Phom đứng gọn gàng, viền phối tinh tế cho đồng phục dịch vụ, thời trang và quà tặng.': 'A crisp silhouette with refined piping for service uniforms, fashion and gifts.', 'Cotton twill giữ phom': 'Shape-holding cotton twill', 'Viền piping theo màu thương hiệu': 'Piping matched to your brand', 'Khóa bên hông hoàn thiện': 'Finished side fastening',
+    'Nón safari': 'Safari hat', 'Vẻ phóng khoáng, vành vừa phải và dải băng đồng màu cho bộ sưu tập du lịch hoặc resort.': 'A relaxed profile with a balanced brim and tonal band for travel or resort collections.', 'Cotton brushed mềm tay': 'Soft brushed cotton', 'Dải băng dệt hoặc da': 'Woven or leather band', 'Thêu tên thương hiệu tinh gọn': 'Refined brand-name embroidery'
+  },
+  ja: {
+    'Khám phá 15 dòng nón': '15種類の帽子を見る', 'Mười lăm form khác biệt.': '個性豊かな15のフォルム。', 'Nón tai bèo': 'ブーニーハット', 'Vành mềm, che nắng tốt và mang tinh thần dã ngoại hiện đại cho chiến dịch ngoài trời.': '柔らかなつばで日差しを防ぐ、現代的なアウトドアスタイル。', 'Ripstop nhẹ, nhanh khô': '軽量速乾リップストップ', 'Dây giữ và khóa điều chỉnh': 'あご紐と調整ストッパー', 'Khoen thoáng khí chống ẩm': '通気性のある防湿アイレット',
+    'Nón thủy thủ': 'セーラーキャップ', 'Phom đứng gọn gàng, viền phối tinh tế cho đồng phục dịch vụ, thời trang và quà tặng.': '端正なシルエットと上品なパイピング。制服やギフトに。', 'Cotton twill giữ phom': '形を保つコットンツイル', 'Viền piping theo màu thương hiệu': 'ブランドカラーのパイピング', 'Khóa bên hông hoàn thiện': 'サイド留め具',
+    'Nón safari': 'サファリハット', 'Vẻ phóng khoáng, vành vừa phải và dải băng đồng màu cho bộ sưu tập du lịch hoặc resort.': '程よいつばと同色バンドを備えた、旅やリゾート向けの軽やかな形。', 'Cotton brushed mềm tay': '柔らかなブラッシュドコットン', 'Dải băng dệt hoặc da': '織りまたはレザーバンド', 'Thêu tên thương hiệu tinh gọn': '端正なブランド刺繍'
+  },
+  ko: {
+    'Khám phá 15 dòng nón': '15가지 모자 라인 보기', 'Mười lăm form khác biệt.': '개성 있는 15가지 형태.', 'Nón tai bèo': '부니햇', 'Vành mềm, che nắng tốt và mang tinh thần dã ngoại hiện đại cho chiến dịch ngoài trời.': '부드러운 챙과 뛰어난 차양, 현대적인 아웃도어 감성.', 'Ripstop nhẹ, nhanh khô': '가볍고 빠르게 마르는 립스톱', 'Dây giữ và khóa điều chỉnh': '턱끈과 조절 토글', 'Khoen thoáng khí chống ẩm': '통기성 방습 아일릿',
+    'Nón thủy thủ': '세일러 캡', 'Phom đứng gọn gàng, viền phối tinh tế cho đồng phục dịch vụ, thời trang và quà tặng.': '정돈된 실루엣과 섬세한 파이핑으로 유니폼과 선물에 어울립니다.', 'Cotton twill giữ phom': '형태를 잡는 코튼 트윌', 'Viền piping theo màu thương hiệu': '브랜드 컬러 파이핑', 'Khóa bên hông hoàn thiện': '완성도 높은 사이드 잠금',
+    'Nón safari': '사파리 햇', 'Vẻ phóng khoáng, vành vừa phải và dải băng đồng màu cho bộ sưu tập du lịch hoặc resort.': '여행과 리조트 컬렉션을 위한 여유로운 형태와 톤온톤 밴드.', 'Cotton brushed mềm tay': '부드러운 브러시드 코튼', 'Dải băng dệt hoặc da': '직조 또는 가죽 밴드', 'Thêu tên thương hiệu tinh gọn': '정제된 브랜드 자수'
+  },
+  fr: {
+    'Khám phá 15 dòng nón': 'Découvrir 15 lignes de chapeaux', 'Mười lăm form khác biệt.': 'Quinze formes distinctives.', 'Nón tai bèo': 'Chapeau boonie', 'Vành mềm, che nắng tốt và mang tinh thần dã ngoại hiện đại cho chiến dịch ngoài trời.': 'Un bord souple, une bonne protection solaire et un esprit outdoor moderne.', 'Ripstop nhẹ, nhanh khô': 'Ripstop léger à séchage rapide', 'Dây giữ và khóa điều chỉnh': 'Cordon et réglage ajustable', 'Khoen thoáng khí chống ẩm': 'Œillets respirants anti-humidité',
+    'Nón thủy thủ': 'Casquette marin', 'Phom đứng gọn gàng, viền phối tinh tế cho đồng phục dịch vụ, thời trang và quà tặng.': 'Une silhouette nette aux finitions raffinées pour uniformes, mode et cadeaux.', 'Cotton twill giữ phom': 'Coton twill qui garde sa forme', 'Viền piping theo màu thương hiệu': 'Passepoil aux couleurs de la marque', 'Khóa bên hông hoàn thiện': 'Fermeture latérale soignée',
+    'Nón safari': 'Chapeau safari', 'Vẻ phóng khoáng, vành vừa phải và dải băng đồng màu cho bộ sưu tập du lịch hoặc resort.': 'Une allure libre, un bord équilibré et un bandeau ton sur ton pour le voyage ou le resort.', 'Cotton brushed mềm tay': 'Coton brossé doux', 'Dải băng dệt hoặc da': 'Bande tissée ou cuir', 'Thêu tên thương hiệu tinh gọn': 'Broderie de marque épurée'
+  },
+  zh: {
+    'Khám phá 15 dòng nón': '探索15条帽子系列', 'Mười lăm form khác biệt.': '十五种独特版型。', 'Nón tai bèo': '奔尼帽', 'Vành mềm, che nắng tốt và mang tinh thần dã ngoại hiện đại cho chiến dịch ngoài trời.': '柔软帽檐，遮阳出色，呈现现代户外风格。', 'Ripstop nhẹ, nhanh khô': '轻量速干防撕裂面料', 'Dây giữ và khóa điều chỉnh': '下巴绳与可调节扣', 'Khoen thoáng khí chống ẩm': '透气防潮气眼',
+    'Nón thủy thủ': '水手帽', 'Phom đứng gọn gàng, viền phối tinh tế cho đồng phục dịch vụ, thời trang và quà tặng.': '利落版型与精致滚边，适合服务制服、时装与礼赠。', 'Cotton twill giữ phom': '挺括棉斜纹', 'Viền piping theo màu thương hiệu': '品牌色滚边', 'Khóa bên hông hoàn thiện': '精致侧面扣件',
+    'Nón safari': '探险帽', 'Vẻ phóng khoáng, vành vừa phải và dải băng đồng màu cho bộ sưu tập du lịch hoặc resort.': '轻松廓形、中等帽檐与同色帽带，适合旅行与度假系列。', 'Cotton brushed mềm tay': '柔软磨毛棉', 'Dải băng dệt hoặc da': '织带或皮革帽带', 'Thêu tên thương hiệu tinh gọn': '简洁品牌刺绣'
+  }
+};
+Object.entries(productLocaleAdditions).forEach(([locale, additions]) => Object.assign(window.TPC_I18N?.[locale] || {}, additions));
 
 const localeOptions = [
   { code: 'vi', label: 'Tiếng Việt' },
@@ -239,6 +270,7 @@ document.querySelector('#quoteForm')?.addEventListener('submit', async (event) =
   const data = new FormData(form);
   const subject = encodeURIComponent(`Yêu cầu báo giá nón từ ${data.get('name')}`);
   const body = encodeURIComponent(`Họ tên / Công ty: ${data.get('name')}\nEmail: ${data.get('email')}\nDòng nón: ${data.get('type')}\n\nMô tả yêu cầu:\n${data.get('message')}`);
+  const mailHref = `mailto:thanhphuongcap76@gmail.com?subject=${subject}&body=${body}`;
   const note = document.querySelector('#formNote');
   const button = form.querySelector('button[type="submit"]');
   const buttonContent = button.innerHTML;
@@ -270,10 +302,10 @@ document.querySelector('#quoteForm')?.addEventListener('submit', async (event) =
   } catch (error) {
     console.error('Quote submission failed', error);
     if (note) {
-      note.textContent = localize('Chưa thể gửi trực tiếp. Ứng dụng email đang được mở để bạn gửi yêu cầu.');
+      note.innerHTML = `${localize('Chưa thể gửi trực tiếp. Ứng dụng email đang được mở để bạn gửi yêu cầu.')} <a href="${mailHref}">Mở lại email</a>`;
       note.classList.add('is-error');
     }
-    window.location.href = `mailto:thanhphuongcap76@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = mailHref;
   } finally {
     button.disabled = false;
     button.innerHTML = buttonContent;

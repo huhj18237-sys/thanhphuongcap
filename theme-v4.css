@@ -166,6 +166,7 @@ body::before {
 .floating-card-bottom { right: -19px; bottom: 32px; box-shadow: 8px 8px 0 var(--coral), 0 18px 32px rgba(9,17,39,.11); }
 .card-number, .mini-icon { color: var(--coral); }
 .circle-stamp { background: var(--lime); border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); }
+.circle-stamp img { width: 70px; height: 70px; object-fit: cover; border-radius: 16px; box-shadow: 3px 3px 0 rgba(9,17,39,.72); }
 
 /* Bands and sections */
 .ticker { background: linear-gradient(90deg, var(--ink), #19245a, var(--ink)); padding: 21px 0; }
@@ -346,5 +347,5 @@ body::before {
   .footer-bottom span:nth-child(2), .footer-bottom a { justify-self: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-visual::before, .floating-card, .circle-stamp { animation: none !important; }
+  .hero-visual::before, .floating-card { animation: none !important; }
 }

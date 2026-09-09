@@ -165,8 +165,34 @@ body::before {
 .floating-card-top { left: -30px; top: 42px; }
 .floating-card-bottom { right: -19px; bottom: 32px; box-shadow: 8px 8px 0 var(--coral), 0 18px 32px rgba(9,17,39,.11); }
 .card-number, .mini-icon { color: var(--coral); }
-.circle-stamp { background: var(--lime); border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); }
-.circle-stamp img { width: 70px; height: 70px; object-fit: cover; border-radius: 16px; box-shadow: 3px 3px 0 rgba(9,17,39,.72); }
+.circle-stamp {
+  isolation: isolate;
+  overflow: visible;
+  background: rgba(255,255,255,.96);
+  border: 0;
+  box-shadow: 0 16px 34px rgba(9,17,39,.28), 0 0 0 1px rgba(255,255,255,.72);
+  animation: none;
+}
+.circle-stamp::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  inset: -5px;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg,var(--lime),var(--champagne),var(--coral),#7a5cff,var(--lime));
+  box-shadow: 0 0 0 3px var(--ink), 0 0 24px rgba(216,255,63,.35);
+  animation: stampOrbit 7s linear infinite;
+}
+.circle-stamp::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 4px;
+  border-radius: inherit;
+  background: #fbf8f1;
+}
+.circle-stamp img { width: 73px; height: 73px; object-fit: cover; border-radius: 50%; clip-path: circle(47%); box-shadow: none; }
+@keyframes stampOrbit { to { transform: rotate(360deg); } }
 
 /* Bands and sections */
 .ticker { background: linear-gradient(90deg, var(--ink), #19245a, var(--ink)); padding: 21px 0; }
@@ -347,5 +373,5 @@ body::before {
   .footer-bottom span:nth-child(2), .footer-bottom a { justify-self: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-visual::before, .floating-card { animation: none !important; }
+  .hero-visual::before, .floating-card, .circle-stamp::before { animation: none !important; }
 }

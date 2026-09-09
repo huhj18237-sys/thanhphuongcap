@@ -356,9 +356,9 @@
 }
 .contact-icon:hover,.footer-social-icon:hover { transform: translateY(-5px) rotate(-3deg); box-shadow: 0 11px 22px rgba(9,17,39,.18); }
 .contact-icon svg,.footer-social-icon svg { width: 21px; height: 21px; display: block; }
-.contact-icon.zalo,.footer-social-icon.zalo { color: #fff; border-color: #1688ff; background: linear-gradient(145deg,#35a4ff,#0875ec); }
-.zalo-mark { position: relative; display: grid; place-items: center; width: 26px; height: 18px; border-radius: 6px; background: #fff; color: #1688ff; font: 800 7px/1 Arial,sans-serif; letter-spacing: -.02em; }
-.zalo-mark::after { content: ''; position: absolute; left: 4px; bottom: -3px; width: 6px; height: 6px; background: #fff; clip-path: polygon(0 0,100% 0,0 100%); }
+.contact-icon.zalo,.footer-social-icon.zalo { color: #fff; border-color: #1688ff; background: linear-gradient(145deg,#3da8ff 0%,#1688ff 56%,#0875ec 100%); }
+.zalo-mark { position: relative; display: grid; place-items: center; width: 23px; height: 16px; border-radius: 6px; background: #fff; color: #1688ff; font: 800 6px/1 Arial,sans-serif; letter-spacing: -.04em; box-shadow: 0 2px 5px rgba(0,67,147,.2); }
+.zalo-mark::after { content: ''; position: absolute; left: 4px; bottom: -3px; width: 5px; height: 5px; background: #fff; clip-path: polygon(0 0,100% 0,0 100%); }
 .contact-icon.gmail,.footer-social-icon.gmail { border-color: rgba(9,17,39,.12); background: #fff; }
 .contact-icon.whatsapp,.footer-social-icon.whatsapp { border-color: #17b866; background: linear-gradient(145deg,#2ed47b,#12a958); }
 .contact-icon.phone,.footer-social-icon.phone { border-color: #ff6f5e; background: linear-gradient(145deg,#ff806f,#f35648); }

@@ -407,3 +407,24 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .hero-visual::before, .floating-card { animation: none !important; }
 }
+
+/* Vietnamese display type: give stacked tone marks enough breathing room. */
+.hero h1 {
+  font-family: 'DM Sans', Arial, sans-serif;
+  line-height: .98;
+  letter-spacing: -.065em;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+.hero h1 em,
+.intro h2,
+.section-heading h2,
+.process h2,
+.factory h2,
+.quote h2 {
+  font-family: 'DM Sans', Arial, sans-serif;
+  line-height: 1.02;
+  letter-spacing: -.055em;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}

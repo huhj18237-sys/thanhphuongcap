@@ -655,3 +655,52 @@ body:not(.page-body) .section-kicker::before { content: ''; width: 34px; height:
 
 html,body { overflow-x: hidden; }
 .site-footer { overflow: hidden; }
+
+/* Keep Vietnamese accents clear on every large editorial heading. */
+:is(
+  .page-hero h1,
+  .page-section-heading h2,
+  .about-copy h2,
+  .page-cta h2,
+  .proof-head h2,
+  .process-board-copy h2,
+  .manifesto-copy h2,
+  .about-editorial-copy h2
+) {
+  font-family: 'DM Sans', Arial, sans-serif;
+  line-height: 1.02;
+  letter-spacing: -.055em;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  text-wrap: balance;
+}
+:is(
+  .page-hero h1,
+  .page-section-heading h2,
+  .about-copy h2,
+  .page-cta h2,
+  .proof-head h2,
+  .process-board-copy h2,
+  .manifesto-copy h2,
+  .about-editorial-copy h2
+) em {
+  font-family: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
+
+@media (max-width: 560px) {
+  :is(
+    .page-hero h1,
+    .page-section-heading h2,
+    .about-copy h2,
+    .page-cta h2,
+    .proof-head h2,
+    .process-board-copy h2,
+    .manifesto-copy h2,
+    .about-editorial-copy h2
+  ) {
+    line-height: 1.06;
+    letter-spacing: -.04em;
+  }
+}

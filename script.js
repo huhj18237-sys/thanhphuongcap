@@ -247,13 +247,21 @@ document.querySelector('#quoteForm')?.addEventListener('submit', async (event) =
   button.textContent = localize('Đang gửi yêu cầu...');
   note?.classList.remove('is-success', 'is-error');
   try {
-    const response = await fetch('/api/quote', {
+    const response = await fetch('https://formsubmit.co/ajax/thanhphuongcap76@gmail.com', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(Object.fromEntries(data.entries()))
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        name: data.get('name'),
+        email: data.get('email'),
+        type: data.get('type'),
+        message: data.get('message') || 'Khách hàng chưa nhập mô tả.',
+        _subject: `Yêu cầu báo giá mới từ ${data.get('name')}`,
+        _template: 'table',
+        _url: 'https://thanhphuongcap.vercel.app/#bao-gia'
+      })
     });
     const result = await response.json();
-    if (!response.ok || !result.success) throw new Error(result.message || 'Submission failed');
+    if (!response.ok || String(result.success) !== 'true') throw new Error(result.message || 'Submission failed');
     if (note) {
       note.textContent = localize('Yêu cầu đã được gửi thành công. Chúng tôi sẽ liên hệ lại với bạn sớm.');
       note.classList.add('is-success');

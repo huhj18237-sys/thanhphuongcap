@@ -91,6 +91,25 @@ button,a { -webkit-tap-highlight-color: transparent; }
 .section-admin-card p { margin: 8px 0 0; color: var(--muted); }
 .section-admin-card .section-page { display: inline-flex; padding: 5px 8px; color: var(--violet); border-radius: 999px; background: #f0edff; font-size: 11px; font-weight: 800; }
 .settings-card { display: grid; gap: 19px; max-width: 980px; }
+.contact-settings-title { padding: 8px 0 0; }
+.contact-settings-title h3 { margin: 7px 0 5px; font: 600 23px var(--display); letter-spacing: -.04em; }
+.contact-settings-title p { margin: 0; color: var(--muted); }
+.contact-settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.contact-setting-card { display: grid; gap: 13px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.contact-setting-icon { width: 47px; height: 47px; display: grid; place-items: center; color: #fff; border-radius: 13px; box-shadow: 0 9px 22px rgba(9,17,39,.14); font: 800 11px var(--display); }
+.zalo-setting .contact-setting-icon { background: #1688ff; }
+.gmail-setting .contact-setting-icon { color: #d33b2f; background: #fff; border: 1px solid var(--line); font-size: 22px; }
+.whatsapp-setting .contact-setting-icon { background: #17b866; font-size: 21px; }
+.phone-setting .contact-setting-icon { background: var(--coral); font-size: 19px; }
+.setting-toggle { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+.setting-toggle input { width: 18px; height: 18px; accent-color: var(--violet); }
+.password-card { max-width: 720px; }
+.password-notice { padding: 18px; border: 1px solid rgba(121,88,244,.22); border-radius: 12px; background: #f4f1ff; }
+.password-notice strong { font: 700 17px var(--display); }
+.password-notice p { margin: 5px 0 0; color: var(--muted); }
+.password-message { min-height: 22px; margin: 0; font-weight: 700; }
+.password-message.is-error { color: #b42318; }
+.password-message.is-success { color: #138a52; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
 label { display: grid; gap: 7px; color: var(--ink); font-size: 13px; font-weight: 700; }
 input,textarea,select { width: 100%; padding: 11px 12px; color: var(--ink); border: 1px solid var(--line); border-radius: 9px; background: #fff; outline: none; }
@@ -116,4 +135,4 @@ textarea { resize: vertical; }
 .toast.is-visible { opacity: 1; transform: none; }
 .toast.is-error { background: #9b241b; }
 @media (max-width: 1100px) { .product-admin-grid { grid-template-columns: repeat(2,1fr); } .overview-grid { grid-template-columns: 1fr 1fr; } .stat-card:last-child { grid-column: span 2; } }
-@media (max-width: 760px) { .login-screen { grid-template-columns: 1fr; } .login-screen::before,.login-brand { display:none; } .login-card { width:min(92%,520px); padding:32px; } .admin-app { grid-template-columns:1fr; } .admin-sidebar { position:static; width:100%; height:auto; padding:15px; } .admin-logo,.sidebar-foot { display:none; } .admin-nav { display:flex; overflow-x:auto; } .nav-item { min-width:max-content; padding:11px 13px; } .nav-item span { display:none; } .admin-main { padding:0 4vw 55px; } .admin-topbar { min-height:96px; } .admin-topbar .eyebrow,.save-state { display:none; } .admin-topbar h1 { font-size:28px; } .overview-grid,.product-admin-grid,.welcome-card,.form-grid { grid-template-columns:1fr; } .stat-card:last-child { grid-column:auto; } .panel-toolbar { align-items:flex-start; flex-direction:column; } .content-field-control { grid-template-columns:1fr; } .toggle-label { padding:0; } .gallery-row { grid-template-columns:50px minmax(0,1fr) auto; } .gallery-row img { width:50px;height:48px; } .gallery-row .upload-button { grid-column:2/3; } }
+@media (max-width: 760px) { .login-screen { grid-template-columns: 1fr; } .login-screen::before,.login-brand { display:none; } .login-card { width:min(92%,520px); padding:32px; } .admin-app { grid-template-columns:1fr; } .admin-sidebar { position:static; width:100%; height:auto; padding:15px; } .admin-logo,.sidebar-foot { display:none; } .admin-nav { display:flex; overflow-x:auto; } .nav-item { min-width:max-content; padding:11px 13px; } .nav-item span { display:none; } .admin-main { padding:0 4vw 55px; } .admin-topbar { min-height:96px; } .admin-topbar .eyebrow,.save-state { display:none; } .admin-topbar h1 { font-size:28px; } .overview-grid,.product-admin-grid,.welcome-card,.form-grid,.contact-settings-grid { grid-template-columns:1fr; } .stat-card:last-child { grid-column:auto; } .panel-toolbar { align-items:flex-start; flex-direction:column; } .content-field-control { grid-template-columns:1fr; } .toggle-label { padding:0; } .gallery-row { grid-template-columns:50px minmax(0,1fr) auto; } .gallery-row img { width:50px;height:48px; } .gallery-row .upload-button { grid-column:2/3; } }

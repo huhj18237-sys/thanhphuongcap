@@ -4,7 +4,7 @@
   const escapeHtml = (value = '') => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
   const pageNames = { '/': 'Trang chủ', '/san-pham': 'Sản phẩm', '/nang-luc': 'Năng lực', '/quy-trinh': 'Quy trình', '/gioi-thieu': 'Giới thiệu' };
   const panelMeta = {
-    overview: ['TỔNG QUAN', 'Quản lý website'], products: ['SẢN PHẨM', 'Danh sách sản phẩm'], content: ['NỘI DUNG TRANG', 'Chỉnh sửa nội dung'], sections: ['KHỐI NỘI DUNG', 'Nội dung bổ sung'], settings: ['THÔNG TIN CHUNG', 'Cài đặt website']
+    overview: ['TỔNG QUAN', 'Quản lý website'], products: ['SẢN PHẨM', 'Danh sách sản phẩm'], content: ['NỘI DUNG TRANG', 'Chỉnh sửa nội dung'], sections: ['KHỐI NỘI DUNG', 'Nội dung bổ sung'], settings: ['THÔNG TIN CHUNG', 'Cài đặt website'], password: ['BẢO MẬT', 'Đổi mật khẩu']
   };
   let password = sessionStorage.getItem('tpcAdminPassword') || '';
   let content = null;
@@ -182,11 +182,18 @@
   }
 
   function renderSettings() {
-    $$('[data-site-field]').forEach((input) => { input.value = content.site[input.dataset.siteField] || ''; });
+    $$('[data-site-field]').forEach((input) => {
+      const value = content.site[input.dataset.siteField];
+      if (input.type === 'checkbox') input.checked = value !== false;
+      else input.value = value || '';
+    });
   }
 
   function bindSettings() {
-    $$('[data-site-field]').forEach((input) => input.addEventListener('input', () => { content.site[input.dataset.siteField] = input.value; markDirty(); }));
+    $$('[data-site-field]').forEach((input) => {
+      const eventName = input.type === 'checkbox' ? 'change' : 'input';
+      input.addEventListener(eventName, () => { content.site[input.dataset.siteField] = input.type === 'checkbox' ? input.checked : input.value; markDirty(); });
+    });
     $$('[data-upload-target]').forEach((input) => input.addEventListener('change', async (event) => {
       const file = event.target.files[0]; if (!file) return;
       try { content.site.logo = await uploadImage(file, input.closest('label')); $('[data-site-field="logo"]').value = content.site.logo; markDirty(); } catch (error) { toast(error.message, true); }
@@ -230,6 +237,31 @@
   $('#page-filter').addEventListener('change', renderContentFields);
   $('#save-button').addEventListener('click', saveAll);
   $('#logout-button').addEventListener('click', () => { sessionStorage.removeItem('tpcAdminPassword'); location.reload(); });
+  $('#change-password-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const currentPassword = $('#current-password').value;
+    const newPassword = $('#new-password').value;
+    const confirmPassword = $('#confirm-password').value;
+    const message = $('#password-message');
+    const button = event.currentTarget.querySelector('button[type="submit"]');
+    message.textContent = '';
+    message.className = 'password-message';
+    if (currentPassword !== password) { message.textContent = 'Mật khẩu hiện tại không đúng.'; message.classList.add('is-error'); return; }
+    if (newPassword.length < 10) { message.textContent = 'Mật khẩu mới phải có ít nhất 10 ký tự.'; message.classList.add('is-error'); return; }
+    if (newPassword !== confirmPassword) { message.textContent = 'Hai lần nhập mật khẩu mới chưa khớp.'; message.classList.add('is-error'); return; }
+    if (newPassword === currentPassword) { message.textContent = 'Mật khẩu mới phải khác mật khẩu hiện tại.'; message.classList.add('is-error'); return; }
+    button.disabled = true;
+    try {
+      await api('/api/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ newPassword }) });
+      password = newPassword;
+      sessionStorage.setItem('tpcAdminPassword', password);
+      event.currentTarget.reset();
+      message.textContent = 'Đổi mật khẩu thành công. Mật khẩu mới đã có hiệu lực.';
+      message.classList.add('is-success');
+      toast('Đổi mật khẩu quản trị thành công.');
+    } catch (error) { message.textContent = error.message; message.classList.add('is-error'); }
+    finally { button.disabled = false; }
+  });
   $$('[data-close-dialog]').forEach((button) => button.addEventListener('click', () => document.getElementById(button.dataset.closeDialog).close()));
   $('#product-form').addEventListener('submit', (event) => {
     event.preventDefault();

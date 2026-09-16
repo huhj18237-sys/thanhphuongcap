@@ -10,7 +10,7 @@ export default async function handler(request, response) {
     response.setHeader('Allow', 'POST');
     return response.status(405).json({ error: 'Phương thức không được hỗ trợ.' });
   }
-  if (!isAuthorized(request)) return response.status(401).json({ error: 'Mật khẩu quản trị không đúng.' });
+  if (!(await isAuthorized(request))) return response.status(401).json({ error: 'Mật khẩu quản trị không đúng.' });
   if (!process.env.BLOB_READ_WRITE_TOKEN) return response.status(503).json({ error: 'Kho ảnh chưa được kết nối.' });
 
   try {

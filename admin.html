@@ -33,6 +33,7 @@
         <button class="nav-item" type="button" data-panel="content"><span>03</span>Nội dung trang</button>
         <button class="nav-item" type="button" data-panel="sections"><span>04</span>Khối nội dung mới</button>
         <button class="nav-item" type="button" data-panel="settings"><span>05</span>Thông tin chung</button>
+        <button class="nav-item" type="button" data-panel="password"><span>06</span>Đổi mật khẩu</button>
       </nav>
       <div class="sidebar-foot"><a href="/" target="_blank" rel="noreferrer">Mở website <span>↗</span></a><button type="button" id="logout-button">Đăng xuất</button></div>
     </aside>
@@ -65,11 +66,28 @@
         <div class="settings-card">
           <label>Tên thương hiệu<input data-site-field="name" type="text"></label>
           <label>Thông điệp ngắn<input data-site-field="tagline" type="text"></label>
-          <div class="form-grid"><label>Email<input data-site-field="email" type="email"></label><label>Số điện thoại hiển thị<input data-site-field="phone" type="text"></label></div>
-          <div class="form-grid"><label>Số điện thoại quốc tế<input data-site-field="phoneInternational" type="text"></label><label>Số Zalo<input data-site-field="zalo" type="text"></label></div>
+          <div class="contact-settings-title"><span class="eyebrow">BIỂU TƯỢNG LIÊN HỆ</span><h3>Thông tin Zalo, Gmail, WhatsApp và điện thoại</h3><p>Sửa thông tin hoặc tắt biểu tượng không muốn hiển thị. Website sẽ dùng dữ liệu mới sau khi bấm “Lưu & đồng bộ”.</p></div>
+          <div class="contact-settings-grid">
+            <article class="contact-setting-card zalo-setting"><div class="contact-setting-icon">Zalo</div><label>Số Zalo<input data-site-field="zalo" type="text" placeholder="0906607633"></label><label class="setting-toggle"><input data-site-field="showZalo" type="checkbox"> Hiển thị biểu tượng Zalo</label></article>
+            <article class="contact-setting-card gmail-setting"><div class="contact-setting-icon">M</div><label>Email Gmail<input data-site-field="email" type="email" placeholder="ten@gmail.com"></label><label class="setting-toggle"><input data-site-field="showEmail" type="checkbox"> Hiển thị biểu tượng Gmail</label></article>
+            <article class="contact-setting-card whatsapp-setting"><div class="contact-setting-icon">◔</div><label>Số WhatsApp quốc tế<input data-site-field="whatsapp" type="text" placeholder="+84906607633"></label><label class="setting-toggle"><input data-site-field="showWhatsapp" type="checkbox"> Hiển thị biểu tượng WhatsApp</label></article>
+            <article class="contact-setting-card phone-setting"><div class="contact-setting-icon">☎</div><label>Số điện thoại hiển thị<input data-site-field="phone" type="text"></label><label>Số điện thoại gọi trực tiếp<input data-site-field="phoneInternational" type="text" placeholder="+84906607633"></label><label class="setting-toggle"><input data-site-field="showPhone" type="checkbox"> Hiển thị biểu tượng điện thoại</label></article>
+          </div>
           <label>Địa chỉ<textarea data-site-field="address" rows="3"></textarea></label>
           <div class="form-grid"><label>Mã số thuế<input data-site-field="taxId" type="text"></label><label>Logo (URL hoặc tải ảnh)<div class="image-input-row"><input data-site-field="logo" type="text"><label class="upload-button">Tải ảnh<input type="file" accept="image/*" data-upload-target="site.logo"></label></div></label></div>
         </div>
+      </section>
+
+      <section class="admin-panel" data-panel-view="password">
+        <div class="panel-toolbar"><div><h2>Đổi mật khẩu quản trị</h2><p>Mật khẩu mới được lưu an toàn và có hiệu lực ngay sau khi đổi thành công.</p></div></div>
+        <form class="settings-card password-card" id="change-password-form">
+          <div class="password-notice"><strong>Bảo vệ tài khoản admin</strong><p>Dùng ít nhất 10 ký tự và không chia sẻ mật khẩu với người không quản lý website.</p></div>
+          <label>Mật khẩu hiện tại<input id="current-password" type="password" autocomplete="current-password" required></label>
+          <label>Mật khẩu mới<input id="new-password" type="password" autocomplete="new-password" minlength="10" required></label>
+          <label>Nhập lại mật khẩu mới<input id="confirm-password" type="password" autocomplete="new-password" minlength="10" required></label>
+          <div><button class="primary-button" type="submit">Đổi mật khẩu <span>→</span></button></div>
+          <p class="password-message" id="password-message" role="status"></p>
+        </form>
       </section>
     </main>
   </div>

@@ -15,6 +15,10 @@
 
   function applySiteSettings(site) {
     if (!site) return;
+    const phoneDigits = String(site.phoneInternational || site.phone || '').replace(/[^0-9+]/g, '');
+    const whatsappDigits = String(site.whatsapp || site.phoneInternational || '').replace(/\D/g, '');
+    const zaloDigits = String(site.zalo || '').replace(/\D/g, '');
+    const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(site.email || '')}`;
     document.querySelectorAll('.brand strong').forEach((element) => { element.textContent = site.name; });
     document.querySelectorAll('.brand-logo').forEach((image) => {
       if (site.logo) image.src = site.logo;
@@ -22,8 +26,11 @@
     });
     document.querySelectorAll('.footer-tagline').forEach((element) => { element.textContent = site.tagline; });
     document.querySelectorAll('a[href^="mailto:"]').forEach((link) => { link.href = `mailto:${site.email}`; });
-    document.querySelectorAll('a[href^="tel:"]').forEach((link) => { link.href = `tel:${site.phoneInternational}`; });
-    document.querySelectorAll('a[href*="zalo.me/"]').forEach((link) => { link.href = `https://zalo.me/${site.zalo}`; });
+    document.querySelectorAll('.contact-icon.gmail,.footer-social-icon.gmail').forEach((link) => { link.href = gmailComposeUrl; link.hidden = site.showEmail === false; });
+    document.querySelectorAll('a[href^="tel:"]').forEach((link) => { link.href = `tel:${phoneDigits}`; });
+    document.querySelectorAll('.contact-icon.phone,.footer-social-icon.phone').forEach((link) => { link.href = `tel:${phoneDigits}`; link.hidden = site.showPhone === false; });
+    document.querySelectorAll('.contact-icon.zalo,.footer-social-icon.zalo').forEach((link) => { link.href = `https://zalo.me/${zaloDigits}`; link.hidden = site.showZalo === false; });
+    document.querySelectorAll('.contact-icon.whatsapp,.footer-social-icon.whatsapp').forEach((link) => { link.href = `https://wa.me/${whatsappDigits}`; link.hidden = site.showWhatsapp === false; });
 
     document.querySelectorAll('.footer-contact-row').forEach((row) => {
       const label = row.querySelector('small')?.textContent?.toLowerCase() || '';
@@ -55,7 +62,7 @@
     container.innerHTML = published.map((product, index) => {
       const features = (product.features || []).map((item) => `<li>${escapeHtml(item)}</li>`).join('');
       const image = product.images?.[0] || '/assets/editorial/product-hero.jpg';
-      const classes = ['product-story', 'reveal', index % 7 === 0 ? 'featured' : ''].filter(Boolean).join(' ');
+      const classes = ['product-story', 'is-visible', index % 7 === 0 ? 'featured' : ''].filter(Boolean).join(' ');
       return `<article class="${classes}" id="${escapeHtml(product.slug)}">
         <a class="product-story-hit" href="${productUrl(product)}" aria-label="Xem chi tiết ${escapeHtml(product.name)}"></a>
         <div class="product-story-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(product.name)}" loading="lazy"></div>

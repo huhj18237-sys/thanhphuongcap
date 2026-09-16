@@ -13,7 +13,7 @@ export default async function handler(request, response) {
   }
 
   if (request.method === 'PUT') {
-    if (!isAuthorized(request)) return response.status(401).json({ error: 'Mật khẩu quản trị không đúng.' });
+    if (!(await isAuthorized(request))) return response.status(401).json({ error: 'Mật khẩu quản trị không đúng.' });
 
     try {
       const content = parseJsonBody(request);

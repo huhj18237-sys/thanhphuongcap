@@ -18,10 +18,12 @@ for (const product of content.products) {
   }
 }
 
-for (const file of ['index.html', 'san-pham.html', 'nang-luc.html', 'quy-trinh.html', 'gioi-thieu.html']) {
+for (const file of ['index.html', 'san-pham.html', 'nang-luc.html', 'quy-trinh.html', 'gioi-thieu.html', 'lien-he.html']) {
   const source = fs.readFileSync(path.join(root, file), 'utf8');
   const badLinks = [...source.matchAll(/(?:href|data-page)="([^"]+\.html[^\"]*)"/g)].map((match) => match[1]);
   if (badLinks.length) errors.push(`${file} còn liên kết .html: ${badLinks.join(', ')}`);
+  const hashLinks = [...source.matchAll(/href="([^"]*#[^"]*)"/g)].map((match) => match[1]);
+  if (hashLinks.length) errors.push(`${file} còn liên kết chứa #: ${hashLinks.join(', ')}`);
   if (!source.includes('cms.js')) errors.push(`${file} chưa kết nối CMS.`);
 }
 

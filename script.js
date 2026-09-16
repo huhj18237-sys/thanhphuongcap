@@ -1,3 +1,8 @@
+// Remove legacy fragments from old bookmarks without reloading the page.
+if (window.location.hash) {
+  window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+}
+
 const gmailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=thanhphuongcap76%40gmail.com';
 const contactMarkup = `
   <a class="contact-icon zalo" href="https://zalo.me/0906607633" target="_blank" rel="noreferrer" aria-label="Liên hệ Zalo" title="Zalo">
@@ -284,7 +289,7 @@ document.querySelector('#quoteForm')?.addEventListener('submit', async (event) =
         message: data.get('message') || 'Khách hàng chưa nhập mô tả.',
         _subject: `Yêu cầu báo giá mới từ ${data.get('name')}`,
         _template: 'table',
-        _url: 'https://thanhphuongcap.vercel.app/#bao-gia'
+        _url: 'https://thanhphuongcap.vercel.app/lien-he'
       })
     });
     const result = await response.json();

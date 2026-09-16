@@ -7,6 +7,11 @@
     "phone": "0906 607 633",
     "phoneInternational": "+84906607633",
     "zalo": "0906607633",
+    "whatsapp": "+84906607633",
+    "showZalo": true,
+    "showEmail": true,
+    "showWhatsapp": true,
+    "showPhone": true,
     "address": "12B Tân Thới Nhất 1, Tổ 1, Khu phố 1, Phường Đông Hưng Thuận, TP. Hồ Chí Minh, Việt Nam",
     "taxId": "0318260271",
     "logo": "/assets/logo-premium.png"

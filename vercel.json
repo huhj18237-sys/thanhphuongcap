@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/san-pham/:slug",
-      "destination": "/product.html?slug=:slug"
+      "destination": "/product?slug=:slug"
     }
   ],
   "headers": [

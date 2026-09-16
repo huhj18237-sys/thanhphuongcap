@@ -242,7 +242,7 @@ document.querySelectorAll('.desktop-nav a').forEach((link) => link.addEventListe
   menuToggle?.setAttribute('aria-expanded', 'false');
 }));
 
-const currentPage = document.body.dataset.page || window.location.pathname.split('/').pop() || 'index.html';
+const currentPage = document.body.dataset.page || window.location.pathname.replace(/\/$/, '') || '/';
 document.querySelectorAll('.desktop-nav a[data-page]').forEach((link) => {
   if (link.dataset.page === currentPage) link.classList.add('is-current');
 });

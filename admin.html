@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Quản trị website | THÀNH PHƯỢNG CAP</title>
+  <link rel="icon" type="image/png" href="/assets/logo-premium.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+  <section class="login-screen" id="login-screen">
+    <div class="login-brand"><img src="/assets/logo-premium.png" alt="Logo THÀNH PHƯỢNG CAP"><span>THÀNH PHƯỢNG CAP</span></div>
+    <form class="login-card" id="login-form">
+      <span class="eyebrow">TRANG QUẢN TRỊ</span>
+      <h1>Đăng nhập để quản lý website.</h1>
+      <p>Mọi thay đổi chỉ xuất hiện trên website sau khi anh bấm “Lưu & đồng bộ”.</p>
+      <label>Mật khẩu quản trị<input id="admin-password" type="password" autocomplete="current-password" required autofocus></label>
+      <button class="primary-button" type="submit">Đăng nhập <span>→</span></button>
+      <p class="form-message" id="login-message" role="alert"></p>
+    </form>
+  </section>
+
+  <div class="admin-app" id="admin-app" hidden>
+    <aside class="admin-sidebar">
+      <a class="admin-logo" href="/" target="_blank" rel="noreferrer"><img src="/assets/logo-premium.png" alt=""><span><strong>THÀNH PHƯỢNG CAP</strong><small>CONTENT STUDIO</small></span></a>
+      <nav class="admin-nav" aria-label="Quản trị">
+        <button class="nav-item is-active" type="button" data-panel="overview"><span>01</span>Tổng quan</button>
+        <button class="nav-item" type="button" data-panel="products"><span>02</span>Sản phẩm</button>
+        <button class="nav-item" type="button" data-panel="content"><span>03</span>Nội dung trang</button>
+        <button class="nav-item" type="button" data-panel="sections"><span>04</span>Khối nội dung mới</button>
+        <button class="nav-item" type="button" data-panel="settings"><span>05</span>Thông tin chung</button>
+      </nav>
+      <div class="sidebar-foot"><a href="/" target="_blank" rel="noreferrer">Mở website <span>↗</span></a><button type="button" id="logout-button">Đăng xuất</button></div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar"><div><span class="eyebrow" id="panel-eyebrow">TỔNG QUAN</span><h1 id="panel-title">Quản lý website</h1></div><div class="topbar-actions"><span class="save-state" id="save-state">Đã đồng bộ</span><button class="primary-button" id="save-button" type="button">Lưu & đồng bộ <span>↗</span></button></div></header>
+
+      <section class="admin-panel is-active" data-panel-view="overview">
+        <div class="overview-grid"><article class="stat-card"><span>Sản phẩm</span><strong id="stat-products">0</strong><small>đang hiển thị</small></article><article class="stat-card"><span>Nội dung</span><strong id="stat-fields">0</strong><small>trường có thể chỉnh sửa</small></article><article class="stat-card accent"><span>Khối bổ sung</span><strong id="stat-sections">0</strong><small>khối tùy chỉnh</small></article></div>
+        <div class="welcome-card"><div><span class="eyebrow">ĐỒNG BỘ TRỰC TIẾP</span><h2>Chỉnh ở đây,<br>website đổi theo.</h2><p>Quản lý sản phẩm, ảnh, nội dung từng trang và thông tin liên hệ. Ảnh có thể nhập bằng URL hoặc tải file trực tiếp — chỉ cần dùng một trong hai.</p></div><div class="welcome-steps"><div><strong>01</strong><span>Chọn nội dung cần sửa</span></div><div><strong>02</strong><span>Cập nhật chữ hoặc ảnh</span></div><div><strong>03</strong><span>Bấm Lưu & đồng bộ</span></div></div></div>
+      </section>
+
+      <section class="admin-panel" data-panel-view="products">
+        <div class="panel-toolbar"><div><h2>Danh sách sản phẩm</h2><p>Khách có thể bấm vào từng sản phẩm để xem chi tiết và bộ ảnh.</p></div><button class="secondary-button" id="add-product" type="button">+ Thêm sản phẩm</button></div>
+        <div class="product-admin-grid" id="product-list"></div>
+      </section>
+
+      <section class="admin-panel" data-panel-view="content">
+        <div class="panel-toolbar"><div><h2>Nội dung các trang</h2><p>Sửa tiêu đề, mô tả và ảnh chính. Có thể ẩn nội dung mà không cần xóa dữ liệu.</p></div><select id="page-filter"><option value="all">Tất cả trang</option><option value="/">Trang chủ</option><option value="/san-pham">Sản phẩm</option><option value="/nang-luc">Năng lực</option><option value="/quy-trinh">Quy trình</option><option value="/gioi-thieu">Giới thiệu</option></select></div>
+        <div class="content-fields" id="content-fields"></div>
+      </section>
+
+      <section class="admin-panel" data-panel-view="sections">
+        <div class="panel-toolbar"><div><h2>Khối nội dung mới</h2><p>Thêm hoặc xóa các phần nội dung có tiêu đề, mô tả và ảnh trên bất kỳ trang nào.</p></div><button class="secondary-button" id="add-section" type="button">+ Thêm khối nội dung</button></div>
+        <div class="section-list" id="section-list"></div>
+      </section>
+
+      <section class="admin-panel" data-panel-view="settings">
+        <div class="panel-toolbar"><div><h2>Thông tin chung</h2><p>Thông tin này được dùng đồng bộ ở phần đầu trang, liên hệ và chân trang.</p></div></div>
+        <div class="settings-card">
+          <label>Tên thương hiệu<input data-site-field="name" type="text"></label>
+          <label>Thông điệp ngắn<input data-site-field="tagline" type="text"></label>
+          <div class="form-grid"><label>Email<input data-site-field="email" type="email"></label><label>Số điện thoại hiển thị<input data-site-field="phone" type="text"></label></div>
+          <div class="form-grid"><label>Số điện thoại quốc tế<input data-site-field="phoneInternational" type="text"></label><label>Số Zalo<input data-site-field="zalo" type="text"></label></div>
+          <label>Địa chỉ<textarea data-site-field="address" rows="3"></textarea></label>
+          <div class="form-grid"><label>Mã số thuế<input data-site-field="taxId" type="text"></label><label>Logo (URL hoặc tải ảnh)<div class="image-input-row"><input data-site-field="logo" type="text"><label class="upload-button">Tải ảnh<input type="file" accept="image/*" data-upload-target="site.logo"></label></div></label></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="editor-dialog" id="product-dialog"><form method="dialog" class="dialog-shell" id="product-form"><div class="dialog-head"><div><span class="eyebrow">SẢN PHẨM</span><h2 id="product-dialog-title">Thêm sản phẩm</h2></div><button class="icon-button" type="button" data-close-dialog="product-dialog" aria-label="Đóng">×</button></div><div class="dialog-body" id="product-form-body"></div><div class="dialog-foot"><button class="text-button" type="button" data-close-dialog="product-dialog">Hủy</button><button class="primary-button" id="save-product" value="default">Cập nhật sản phẩm</button></div></form></dialog>
+  <dialog class="editor-dialog" id="section-dialog"><form method="dialog" class="dialog-shell" id="section-form"><div class="dialog-head"><div><span class="eyebrow">KHỐI NỘI DUNG</span><h2 id="section-dialog-title">Thêm nội dung</h2></div><button class="icon-button" type="button" data-close-dialog="section-dialog" aria-label="Đóng">×</button></div><div class="dialog-body" id="section-form-body"></div><div class="dialog-foot"><button class="text-button" type="button" data-close-dialog="section-dialog">Hủy</button><button class="primary-button" id="save-section" value="default">Cập nhật nội dung</button></div></form></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/admin.js"></script>
+</body>
+</html>

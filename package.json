@@ -1,0 +1,12 @@
+{
+  "name": "thanhphuongcap",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node tools/validate-site.mjs"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.0.0"
+  }
+}

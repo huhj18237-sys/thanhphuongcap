@@ -71,12 +71,20 @@
     }).join('');
   }
 
-  function renderHomeProducts(products) {
-    const published = products.filter((product) => product.published !== false).slice(0, 5);
+  function renderHomeProducts(products, homeProductIds = []) {
+    const visibleProducts = products.filter((product) => product.published !== false);
+    const productsById = new Map(visibleProducts.map((product) => [product.id, product]));
+    const selected = homeProductIds.map((id) => productsById.get(id)).filter(Boolean);
+    const published = [...selected, ...visibleProducts.filter((product) => !selected.includes(product))].slice(0, 5);
     document.querySelectorAll('.product-rail-track').forEach((track) => {
       if (!published.length) return;
-      const cards = published.map((product, index) => `<a class="product-rail-card product-rail-cap" href="${productUrl(product)}"><span>${String(index + 1).padStart(2, '0')}</span><strong>${escapeHtml(product.name)}</strong><small>${escapeHtml(product.features?.[0] || 'Xem chi tiết')}</small></a>`).join('');
+      const cards = published.map((product, index) => `<a class="product-rail-card" data-home-product="${escapeHtml(product.id)}" href="${productUrl(product)}"><span>${String(index + 1).padStart(2, '0')}</span><strong>${escapeHtml(product.name)}</strong><small>${escapeHtml(product.features?.[0] || product.summary || 'Xem chi tiết')}</small></a>`).join('');
       track.innerHTML = cards + cards.replaceAll('<a ', '<a aria-hidden="true" tabindex="-1" ');
+      [...track.children].forEach((card, index) => {
+        const product = published[index % published.length];
+        const image = product?.images?.[0] || '/assets/editorial/product-hero.jpg';
+        card.style.backgroundImage = `url(${JSON.stringify(image)})`;
+      });
     });
 
     document.querySelectorAll('.collection-grid .collection-tile').forEach((tile, index) => {
@@ -90,7 +98,7 @@
       const link = tile.querySelector('a');
       if (title) title.textContent = product.name;
       if (link) link.href = productUrl(product);
-      if (product.images?.[0]) tile.style.backgroundImage = `linear-gradient(180deg,rgba(8,15,40,.06),rgba(8,15,40,.84)),url("${product.images[0]}")`;
+      if (product.images?.[0]) tile.style.backgroundImage = `linear-gradient(180deg,rgba(8,15,40,.06),rgba(8,15,40,.84)),url(${JSON.stringify(product.images[0])})`;
     });
 
     document.querySelectorAll('.capability-card').forEach((card, index) => {
@@ -102,6 +110,8 @@
       if (title) title.textContent = product.name;
       if (copy) copy.textContent = product.summary;
       if (link) link.href = productUrl(product);
+      const image = card.querySelector('.cap-image');
+      if (image) image.style.backgroundImage = `url(${JSON.stringify(product.images?.[0] || '/assets/editorial/product-hero.jpg')})`;
     });
   }
 
@@ -129,7 +139,7 @@
       applySiteSettings(content.site);
       applyPageFields(content.pageFields || [], path);
       if (path === '/san-pham') renderCatalog(content.products || []);
-      if (path === '/') renderHomeProducts(content.products || []);
+      if (path === '/') renderHomeProducts(content.products || [], content.homeProductIds || []);
       renderCustomSections(content.customSections || [], path);
       document.dispatchEvent(new CustomEvent('cms:ready', { detail: content }));
     } catch (error) {

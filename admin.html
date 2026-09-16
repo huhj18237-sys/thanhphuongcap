@@ -30,10 +30,11 @@
       <nav class="admin-nav" aria-label="Quản trị">
         <button class="nav-item is-active" type="button" data-panel="overview"><span>01</span>Tổng quan</button>
         <button class="nav-item" type="button" data-panel="products"><span>02</span>Sản phẩm</button>
-        <button class="nav-item" type="button" data-panel="content"><span>03</span>Nội dung trang</button>
-        <button class="nav-item" type="button" data-panel="sections"><span>04</span>Khối nội dung mới</button>
-        <button class="nav-item" type="button" data-panel="settings"><span>05</span>Thông tin chung</button>
-        <button class="nav-item" type="button" data-panel="password"><span>06</span>Đổi mật khẩu</button>
+        <button class="nav-item" type="button" data-panel="showcase"><span>03</span>Trưng bày trang chủ</button>
+        <button class="nav-item" type="button" data-panel="content"><span>04</span>Nội dung trang</button>
+        <button class="nav-item" type="button" data-panel="sections"><span>05</span>Khối nội dung mới</button>
+        <button class="nav-item" type="button" data-panel="settings"><span>06</span>Thông tin chung</button>
+        <button class="nav-item" type="button" data-panel="password"><span>07</span>Đổi mật khẩu</button>
       </nav>
       <div class="sidebar-foot"><a href="/" target="_blank" rel="noreferrer">Mở website <span>↗</span></a><button type="button" id="logout-button">Đăng xuất</button></div>
     </aside>
@@ -49,6 +50,13 @@
       <section class="admin-panel" data-panel-view="products">
         <div class="panel-toolbar"><div><h2>Danh sách sản phẩm</h2><p>Khách có thể bấm vào từng sản phẩm để xem chi tiết và bộ ảnh.</p></div><button class="secondary-button" id="add-product" type="button">+ Thêm sản phẩm</button></div>
         <div class="product-admin-grid" id="product-list"></div>
+      </section>
+
+      <section class="admin-panel" data-panel-view="showcase">
+        <div class="panel-toolbar"><div><h2>Trưng bày sản phẩm trên trang chủ</h2><p>Quản lý đồng thời ba khu vực trong ảnh 1, ảnh 2 và ảnh 3. Sau khi lưu, tên, mô tả, ảnh và liên kết sẽ đồng bộ ra website.</p></div></div>
+        <div class="showcase-note"><strong>Một nguồn dữ liệu, đồng bộ ba khu vực</strong><p>Năm vị trí bên dưới được dùng cho băng sản phẩm, bộ sưu tập và khối năng lực. Thay đổi sản phẩm hoặc ảnh tại đây cũng cập nhật trang chi tiết sản phẩm.</p></div>
+        <section class="showcase-admin-section"><div class="showcase-admin-heading"><span class="eyebrow">TIÊU ĐỀ & MÔ TẢ</span><h3>Nội dung của ba khu vực</h3></div><div class="showcase-copy-grid" id="showcase-content-fields"></div></section>
+        <section class="showcase-admin-section"><div class="showcase-admin-heading"><span class="eyebrow">05 SẢN PHẨM NỔI BẬT</span><h3>Thông tin và hình ảnh</h3><p>Có thể dán URL ảnh hoặc tải file trực tiếp — chỉ cần dùng một trong hai cách.</p></div><div class="showcase-product-grid" id="showcase-product-list"></div></section>
       </section>
 
       <section class="admin-panel" data-panel-view="content">

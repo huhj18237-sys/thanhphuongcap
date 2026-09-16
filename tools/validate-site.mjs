@@ -18,6 +18,12 @@ for (const product of content.products) {
   }
 }
 
+if (!Array.isArray(content.homeProductIds) || content.homeProductIds.length !== 5) errors.push('Trang chủ phải có đúng 5 sản phẩm nổi bật.');
+for (const productId of content.homeProductIds || []) {
+  if (!content.products.some((product) => product.id === productId)) errors.push(`Sản phẩm trang chủ không tồn tại: ${productId}`);
+}
+if (new Set(content.homeProductIds || []).size !== (content.homeProductIds || []).length) errors.push('Danh sách sản phẩm trang chủ bị trùng.');
+
 for (const file of ['index.html', 'san-pham.html', 'nang-luc.html', 'quy-trinh.html', 'gioi-thieu.html', 'lien-he.html']) {
   const source = fs.readFileSync(path.join(root, file), 'utf8');
   const badLinks = [...source.matchAll(/(?:href|data-page)="([^"]+\.html[^\"]*)"/g)].map((match) => match[1]);

@@ -3,8 +3,9 @@
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const escapeHtml = (value = '') => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
   const pageNames = { '/': 'Trang chủ', '/san-pham': 'Sản phẩm', '/nang-luc': 'Năng lực', '/quy-trinh': 'Quy trình', '/gioi-thieu': 'Giới thiệu' };
+  const showcaseFieldIds = ['home-rail-title', 'home-rail-link', 'home-capability-kicker', 'home-capability-title', 'home-capability-copy', 'home-collection-kicker', 'home-collection-title', 'home-collection-copy'];
   const panelMeta = {
-    overview: ['TỔNG QUAN', 'Quản lý website'], products: ['SẢN PHẨM', 'Danh sách sản phẩm'], content: ['NỘI DUNG TRANG', 'Chỉnh sửa nội dung'], sections: ['KHỐI NỘI DUNG', 'Nội dung bổ sung'], settings: ['THÔNG TIN CHUNG', 'Cài đặt website'], password: ['BẢO MẬT', 'Đổi mật khẩu']
+    overview: ['TỔNG QUAN', 'Quản lý website'], products: ['SẢN PHẨM', 'Danh sách sản phẩm'], showcase: ['TRANG CHỦ', 'Trưng bày sản phẩm'], content: ['NỘI DUNG TRANG', 'Chỉnh sửa nội dung'], sections: ['KHỐI NỘI DUNG', 'Nội dung bổ sung'], settings: ['THÔNG TIN CHUNG', 'Cài đặt website'], password: ['BẢO MẬT', 'Đổi mật khẩu']
   };
   let password = sessionStorage.getItem('tpcAdminPassword') || '';
   let content = null;
@@ -58,6 +59,7 @@
   function renderAll() {
     renderStats();
     renderProducts();
+    renderShowcase();
     renderContentFields();
     renderSections();
     renderSettings();
@@ -81,6 +83,87 @@
     </article>`).join('');
     $$('[data-edit-product]', list).forEach((button) => button.addEventListener('click', () => openProduct(button.dataset.editProduct)));
     $$('[data-delete-product]', list).forEach((button) => button.addEventListener('click', () => deleteProduct(button.dataset.deleteProduct)));
+  }
+
+  function ensureShowcaseProductIds() {
+    const validIds = new Set(content.products.map((product) => product.id));
+    const ids = [...new Set((content.homeProductIds || []).filter((id) => validIds.has(id)))];
+    for (const product of content.products) {
+      if (ids.length >= 5) break;
+      if (!ids.includes(product.id)) ids.push(product.id);
+    }
+    content.homeProductIds = ids.slice(0, 5);
+  }
+
+  function renderShowcase() {
+    ensureShowcaseProductIds();
+    const fieldsRoot = $('#showcase-content-fields');
+    const showcaseFields = showcaseFieldIds.map((id) => content.pageFields.find((field) => field.id === id)).filter(Boolean);
+    fieldsRoot.innerHTML = showcaseFields.map((field) => `<label class="showcase-copy-field"><span>${escapeHtml(field.label)}</span><textarea data-showcase-field="${escapeHtml(field.id)}" rows="${field.type === 'html' ? 3 : 2}">${escapeHtml(field.value)}</textarea></label>`).join('');
+    $$('[data-showcase-field]', fieldsRoot).forEach((input) => input.addEventListener('input', (event) => {
+      const field = content.pageFields.find((item) => item.id === event.target.dataset.showcaseField);
+      if (!field) return;
+      field.value = event.target.value;
+      markDirty();
+    }));
+
+    const list = $('#showcase-product-list');
+    list.innerHTML = content.homeProductIds.map((productId, slotIndex) => {
+      const product = content.products.find((item) => item.id === productId);
+      if (!product) return '';
+      const options = content.products.map((item) => `<option value="${escapeHtml(item.id)}"${item.id === product.id ? ' selected' : ''}>${escapeHtml(item.name)}</option>`).join('');
+      const image = product.images?.[0] || '/assets/editorial/product-hero.jpg';
+      return `<article class="showcase-product-card" data-showcase-slot="${slotIndex}" data-product-id="${escapeHtml(product.id)}">
+        <div class="showcase-product-preview"><img src="${escapeHtml(image)}" alt=""><span>VỊ TRÍ ${String(slotIndex + 1).padStart(2, '0')}</span></div>
+        <div class="showcase-product-form">
+          <label>Sản phẩm hiển thị<select data-showcase-select>${options}</select></label>
+          <label>Tên sản phẩm<input data-showcase-product-field="name" value="${escapeHtml(product.name)}"></label>
+          <label>Mô tả ngắn<textarea data-showcase-product-field="summary" rows="3">${escapeHtml(product.summary)}</textarea></label>
+          <label>Dòng mô tả trên băng<input data-showcase-product-field="feature" value="${escapeHtml(product.features?.[0] || '')}"></label>
+          <label>Ảnh đại diện (URL hoặc tải ảnh)<div class="image-input-row"><input data-showcase-product-field="image" value="${escapeHtml(image)}"><label class="upload-button">Tải ảnh<input data-showcase-upload type="file" accept="image/*"></label></div></label>
+          <button class="secondary-button showcase-full-edit" type="button">Chỉnh sửa đầy đủ sản phẩm</button>
+        </div>
+      </article>`;
+    }).join('');
+
+    $$('.showcase-product-card', list).forEach((card) => {
+      const slotIndex = Number(card.dataset.showcaseSlot);
+      const getProduct = () => content.products.find((item) => item.id === card.dataset.productId);
+      $('[data-showcase-select]', card).addEventListener('change', (event) => {
+        const selectedId = event.target.value;
+        const existingSlot = content.homeProductIds.indexOf(selectedId);
+        if (existingSlot >= 0 && existingSlot !== slotIndex) content.homeProductIds[existingSlot] = content.homeProductIds[slotIndex];
+        content.homeProductIds[slotIndex] = selectedId;
+        markDirty();
+        renderShowcase();
+      });
+      $$('[data-showcase-product-field]', card).forEach((input) => input.addEventListener('input', (event) => {
+        const product = getProduct();
+        if (!product) return;
+        const field = event.target.dataset.showcaseProductField;
+        if (field === 'feature') {
+          product.features = Array.isArray(product.features) ? product.features : [];
+          product.features[0] = event.target.value;
+        } else if (field === 'image') {
+          product.images = Array.isArray(product.images) ? product.images : [];
+          product.images[0] = event.target.value;
+          $('.showcase-product-preview img', card).src = event.target.value || '/assets/editorial/product-hero.jpg';
+        } else product[field] = event.target.value;
+        markDirty();
+      }));
+      $('[data-showcase-upload]', card).addEventListener('change', async (event) => {
+        const file = event.target.files[0]; if (!file) return;
+        const product = getProduct(); if (!product) return;
+        try {
+          const url = await uploadImage(file, card);
+          product.images = Array.isArray(product.images) ? product.images : [];
+          product.images[0] = url;
+          markDirty();
+          renderShowcase();
+        } catch (error) { toast(error.message, true); }
+      });
+      $('.showcase-full-edit', card).addEventListener('click', () => openProduct(card.dataset.productId));
+    });
   }
 
   function slugify(value) {
@@ -137,7 +220,7 @@
     const product = content.products.find((item) => item.id === id);
     if (!product || !confirm(`Xóa sản phẩm “${product.name}”? Thao tác sẽ được áp dụng sau khi lưu.`)) return;
     content.products = content.products.filter((item) => item.id !== id);
-    markDirty(); renderProducts(); renderStats(); toast('Đã đưa sản phẩm vào danh sách xóa.');
+    markDirty(); renderProducts(); renderShowcase(); renderStats(); toast('Đã đưa sản phẩm vào danh sách xóa.');
   }
 
   function renderContentFields() {
@@ -265,7 +348,7 @@
   $$('[data-close-dialog]').forEach((button) => button.addEventListener('click', () => document.getElementById(button.dataset.closeDialog).close()));
   $('#product-form').addEventListener('submit', (event) => {
     event.preventDefault();
-    try { collectProductDraft(); const index = content.products.findIndex((item) => item.id === productDraft.id); if (index >= 0) content.products[index] = productDraft; else content.products.push(productDraft); $('#product-dialog').close(); markDirty(); renderProducts(); renderStats(); toast('Đã cập nhật sản phẩm. Bấm Lưu & đồng bộ để xuất bản.'); } catch (error) { toast(error.message, true); }
+    try { collectProductDraft(); const index = content.products.findIndex((item) => item.id === productDraft.id); if (index >= 0) content.products[index] = productDraft; else content.products.push(productDraft); $('#product-dialog').close(); markDirty(); renderProducts(); renderShowcase(); renderStats(); toast('Đã cập nhật sản phẩm. Bấm Lưu & đồng bộ để xuất bản.'); } catch (error) { toast(error.message, true); }
   });
   $('#section-form').addEventListener('submit', (event) => {
     event.preventDefault();

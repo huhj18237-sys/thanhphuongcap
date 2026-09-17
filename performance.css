@@ -1,0 +1,94 @@
+/* Performance layer: preserve the visual system while avoiding costly repaints. */
+html { scroll-behavior: smooth; }
+body { text-rendering: optimizeSpeed; }
+.noise, body::before { display: none !important; }
+
+.site-header,
+.site-header:not(:hover),
+.admin-topbar {
+  background: rgba(248, 248, 255, .97) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.floating-card,
+.hero-visual::before,
+.hero-image::after,
+.circle-stamp {
+  animation: none !important;
+}
+
+.hero-image,
+.capability-card[data-tilt],
+.collection-tile[data-tilt],
+.magnetic {
+  will-change: auto !important;
+}
+
+.image-frame { background-position: center !important; }
+.hero-image { background-image: linear-gradient(180deg, rgba(9,17,39,.02), rgba(9,17,39,.3)), url('/assets/video-scenes/hero-poster.jpg') !important; }
+.product-rail-cap,
+.cap-image-1,
+.tile-1,
+.detail-photo { background-image: url('/assets/editorial/baseball-workshop.jpg') !important; }
+.product-rail-bucket,
+.cap-image-2,
+.tile-2 { background-image: url('/assets/editorial/bucket-workshop.jpg') !important; }
+.product-rail-trucker,
+.cap-image-3,
+.tile-3 { background-image: url('/assets/editorial/trucker-workshop.jpg') !important; }
+.factory-image {
+  background-image: linear-gradient(90deg, rgba(4, 12, 34, .14), rgba(4, 12, 34, .02)), url('/assets/editorial/trucker-workshop.jpg') !important;
+}
+.product-rail-snapback,
+.cap-image-4,
+.tile-4 { background-image: url('/assets/editorial/snapback-workshop.jpg') !important; }
+.product-rail-other,
+.cap-image-5,
+.tile-5 { background-image: url('/assets/editorial/dad-cap-workshop.jpg') !important; }
+.footer-top,
+.capability-module > span,
+.capability-module .capability-icon,
+.product-lightbox::backdrop,
+.editor-dialog::backdrop {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.scroll-progress {
+  width: 100% !important;
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.ticker-track,
+.product-rail-track,
+.footer-marquee-track { animation-play-state: paused !important; }
+.ticker.is-in-view .ticker-track,
+.product-rail.is-in-view .product-rail-track,
+.footer-marquee.is-in-view .footer-marquee-track { animation-play-state: running !important; }
+
+main > section:not(.hero):not(.page-hero),
+.site-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+img { content-visibility: auto; }
+
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .16s !important;
+  }
+  .product-rail-track,
+  .ticker-track,
+  .footer-marquee-track { animation: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; }
+}

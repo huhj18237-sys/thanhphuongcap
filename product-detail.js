@@ -40,7 +40,7 @@
       button.type = 'button';
       button.className = `product-thumbnail${index === 0 ? ' is-active' : ''}`;
       button.setAttribute('aria-label', `Xem ảnh ${index + 1} của ${product.name}`);
-      button.innerHTML = `<img src="${url}" alt="${product.name} - ảnh ${index + 1}">`;
+      button.innerHTML = `<img src="${url}" alt="${product.name} - ảnh ${index + 1}" loading="lazy" decoding="async">`;
       button.addEventListener('click', () => selectImage(url, product.name, button));
       thumbs.appendChild(button);
     });
@@ -60,6 +60,6 @@
   lightbox.addEventListener('click', (event) => { if (event.target === lightbox) lightbox.close(); });
 
   if (window.siteContent) render(window.siteContent);
-  else document.addEventListener('cms:ready', (event) => render(event.detail), { once: true });
+  document.addEventListener('cms:ready', (event) => render(event.detail));
   document.addEventListener('cms:error', showNotFound, { once: true });
 })();

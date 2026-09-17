@@ -4,11 +4,45 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/assets/editorial/boonie.jpg",
+      "destination": "/assets/editorial/_optimized/boonie.jpg"
+    },
+    {
+      "source": "/assets/editorial/safari-hat.jpg",
+      "destination": "/assets/editorial/_optimized/safari-hat.jpg"
+    },
+    {
+      "source": "/assets/editorial/sailor-cap.jpg",
+      "destination": "/assets/editorial/_optimized/sailor-cap.jpg"
+    },
+    {
+      "source": "/assets/editorial/visor.png",
+      "destination": "/assets/editorial/_optimized/visor.jpg"
+    },
+    {
       "source": "/san-pham/:slug",
       "destination": "/product?slug=:slug"
     }
   ],
   "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+      ]
+    },
+    {
+      "source": "/(.*).css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
+      ]
+    },
+    {
+      "source": "/(.*).js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
+      ]
+    },
     {
       "source": "/api/(.*)",
       "headers": [

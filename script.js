@@ -110,11 +110,6 @@ if (footer) {
   footerMarquee.setAttribute('aria-label', 'Dịch vụ nổi bật');
   footerMarquee.innerHTML = `<div class="footer-marquee-track" aria-hidden="true">${[...footerServices, ...footerServices].map((service) => `<span>${service}</span><b>✦</b>`).join('')}</div>`;
   footer.prepend(footerMarquee);
-  footer.addEventListener('pointermove', (event) => {
-    const rect = footer.getBoundingClientRect();
-    footer.style.setProperty('--footer-x', `${((event.clientX - rect.left) / rect.width) * 100}%`);
-    footer.style.setProperty('--footer-y', `${((event.clientY - rect.top) / rect.height) * 100}%`);
-  });
 }
 
 const quickContact = document.createElement('div');
@@ -232,6 +227,32 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
 
+const motionObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => entry.target.classList.toggle('is-in-view', entry.isIntersecting));
+}, { rootMargin: '180px 0px' });
+document.querySelectorAll('.ticker,.product-rail,.footer-marquee').forEach((element) => motionObserver.observe(element));
+
+// Warm internal destinations only when the browser is idle or the visitor shows intent.
+const prefetchedPaths = new Set();
+const prefetchPage = (href) => {
+  const url = new URL(href, window.location.href);
+  if (url.origin !== window.location.origin || prefetchedPaths.has(url.pathname)) return;
+  prefetchedPaths.add(url.pathname);
+  const link = document.createElement('link');
+  link.rel = 'prefetch';
+  link.href = url.pathname;
+  link.as = 'document';
+  document.head.appendChild(link);
+};
+document.querySelectorAll('a[href^="/"]').forEach((link) => {
+  link.addEventListener('pointerenter', () => prefetchPage(link.href), { once: true, passive: true });
+  link.addEventListener('touchstart', () => prefetchPage(link.href), { once: true, passive: true });
+});
+document.querySelectorAll('img').forEach((image, index) => {
+  image.decoding = 'async';
+  if (index > 1 && !image.closest('.product-main-image')) image.loading = 'lazy';
+});
+
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.desktop-nav');
 if (menuToggle) {
@@ -256,12 +277,19 @@ const progressBar = document.createElement('div');
 progressBar.className = 'scroll-progress';
 progressBar.setAttribute('aria-hidden', 'true');
 document.body.prepend(progressBar);
-const updateProgress = () => {
+let scrollFramePending = false;
+const updateScrollUi = () => {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  progressBar.style.width = `${scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0}%`;
+  progressBar.style.setProperty('--scroll-progress', String(scrollable > 0 ? window.scrollY / scrollable : 0));
+  document.querySelector('.site-header')?.classList.toggle('scrolled', window.scrollY > 10);
+  scrollFramePending = false;
 };
-window.addEventListener('scroll', updateProgress, { passive: true });
-updateProgress();
+window.addEventListener('scroll', () => {
+  if (scrollFramePending) return;
+  scrollFramePending = true;
+  requestAnimationFrame(updateScrollUi);
+}, { passive: true });
+updateScrollUi();
 
 document.querySelector('#quoteForm')?.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -312,78 +340,17 @@ document.querySelector('#quoteForm')?.addEventListener('submit', async (event) =
   }
 });
 
-const updateStickyHeader = () => {
-  document.querySelector('.site-header')?.classList.toggle('scrolled', window.scrollY > 10);
-};
-window.addEventListener('scroll', updateStickyHeader, { passive: true });
-updateStickyHeader();
-
-// Subtle cursor depth on the hero image for a tactile, premium feel.
-const heroVisual = document.querySelector('.hero-visual');
-if (heroVisual && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  heroVisual.addEventListener('pointermove', (event) => {
-    const rect = heroVisual.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-    heroVisual.style.setProperty('--tilt-x', `${x * 2.2}deg`);
-    heroVisual.style.setProperty('--tilt-y', `${y * -2.2}deg`);
-  });
-  heroVisual.addEventListener('pointerleave', () => {
-    heroVisual.style.setProperty('--tilt-x', '0deg');
-    heroVisual.style.setProperty('--tilt-y', '0deg');
-  });
-}
-
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('[data-tilt]').forEach((card) => {
-    card.addEventListener('pointermove', (event) => {
-      const rect = card.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `perspective(900px) rotateX(${y * -3.2}deg) rotateY(${x * 3.2}deg) translateY(-7px)`;
-    });
-    card.addEventListener('pointerleave', () => {
-      card.style.removeProperty('transform');
-    });
-  });
-
-  document.querySelectorAll('.button,.header-cta').forEach((button) => {
-    button.classList.add('magnetic');
-    button.addEventListener('pointermove', (event) => {
-      const rect = button.getBoundingClientRect();
-      const x = event.clientX - rect.left - rect.width / 2;
-      const y = event.clientY - rect.top - rect.height / 2;
-      button.style.transform = `translate(${x * 0.08}px,${y * 0.12}px)`;
-    });
-    button.addEventListener('pointerleave', () => button.style.removeProperty('transform'));
-  });
-
-  const parallaxFrames = [...document.querySelectorAll('.image-frame:not(.hero-image)')];
-  let parallaxTicking = false;
-  const updateParallax = () => {
-    parallaxFrames.forEach((frame) => {
-      const rect = frame.getBoundingClientRect();
-      const distance = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
-      frame.style.setProperty('--parallax-y', `${Math.max(-24, Math.min(24, distance * -24))}px`);
-    });
-    parallaxTicking = false;
-  };
-  window.addEventListener('scroll', () => {
-    if (!parallaxTicking) {
-      requestAnimationFrame(updateParallax);
-      parallaxTicking = true;
-    }
-  }, { passive: true });
-  updateParallax();
-}
-
 const heroVideo = document.querySelector('.hero-video');
 if (heroVideo) {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    heroVideo.pause();
-  }
+  const avoidAutoplay = window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 900px)').matches || navigator.connection?.saveData;
+  heroVideo.preload = avoidAutoplay ? 'none' : 'metadata';
+  const startVideo = () => {
+    if (!avoidAutoplay && !document.hidden) heroVideo.play().catch(() => {});
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(startVideo, { timeout: 1600 });
+  else setTimeout(startVideo, 650);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) heroVideo.pause();
-    else if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) heroVideo.play().catch(() => {});
+    else startVideo();
   });
 }

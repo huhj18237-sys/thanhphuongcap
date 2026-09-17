@@ -298,7 +298,7 @@
   async function saveAll() {
     const button = $('#save-button');
     button.disabled = true; button.firstChild.textContent = 'Đang lưu ';
-    try { content = await api('/api/content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(content) }); markSaved(); renderAll(); toast('Đã lưu và đồng bộ website thành công.'); }
+    try { content = await api('/api/content', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(content) }); localStorage.setItem('tpc-public-content-v2', JSON.stringify(content)); markSaved(); renderAll(); toast('Đã lưu và đồng bộ website thành công.'); }
     catch (error) { toast(error.message, true); }
     finally { button.disabled = false; button.firstChild.textContent = 'Lưu & đồng bộ '; }
   }

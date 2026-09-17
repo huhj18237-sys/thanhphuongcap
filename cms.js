@@ -1,4 +1,5 @@
 (() => {
+  const CONTENT_CACHE_KEY = 'tpc-public-content-v2';
   const normalizePath = (value) => {
     const path = (value || '/').replace(/\/index\.html$/, '/').replace(/\.html$/, '').replace(/\/$/, '');
     return path || '/';
@@ -65,7 +66,7 @@
       const classes = ['product-story', 'is-visible', index % 7 === 0 ? 'featured' : ''].filter(Boolean).join(' ');
       return `<article class="${classes}" id="${escapeHtml(product.slug)}">
         <a class="product-story-hit" href="${productUrl(product)}" aria-label="Xem chi tiết ${escapeHtml(product.name)}"></a>
-        <div class="product-story-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(product.name)}" loading="lazy"></div>
+        <div class="product-story-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(product.name)}" loading="lazy" decoding="async"></div>
         <div class="product-story-copy"><span>${escapeHtml(product.code)}</span><h3>${escapeHtml(product.name)}</h3><p>${escapeHtml(product.summary)}</p><ul>${features}</ul><a href="${productUrl(product)}">Xem thông tin và ảnh <span aria-hidden="true">↗</span></a></div>
       </article>`;
     }).join('');
@@ -123,28 +124,38 @@
       const wrapper = document.createElement('section');
       wrapper.className = 'cms-custom-section section-pad';
       wrapper.dataset.cmsCustomSection = section.id;
-      const image = section.image ? `<div class="cms-custom-image"><img src="${escapeHtml(section.image)}" alt="${escapeHtml(section.title)}" loading="lazy"></div>` : '';
+      const image = section.image ? `<div class="cms-custom-image"><img src="${escapeHtml(section.image)}" alt="${escapeHtml(section.title)}" loading="lazy" decoding="async"></div>` : '';
       wrapper.innerHTML = `<div class="cms-custom-inner">${image}<div class="cms-custom-copy"><span class="section-kicker">${escapeHtml(section.kicker || 'Nội dung mới')}</span><h2>${escapeHtml(section.title)}</h2><p>${escapeHtml(section.body)}</p></div></div>`;
       main.appendChild(wrapper);
     });
   }
 
+  function renderContent(content) {
+    const path = normalizePath(window.location.pathname);
+    window.siteContent = content;
+    applySiteSettings(content.site);
+    applyPageFields(content.pageFields || [], path);
+    if (path === '/san-pham') renderCatalog(content.products || []);
+    if (path === '/') renderHomeProducts(content.products || [], content.homeProductIds || []);
+    renderCustomSections(content.customSections || [], path);
+    document.dispatchEvent(new CustomEvent('cms:ready', { detail: content }));
+  }
+
   async function initCms() {
+    let cachedContent = null;
     try {
+      try {
+        cachedContent = JSON.parse(localStorage.getItem(CONTENT_CACHE_KEY) || 'null');
+        if (cachedContent?.products) renderContent(cachedContent);
+      } catch { localStorage.removeItem(CONTENT_CACHE_KEY); }
       const response = await fetch('/api/content', { cache: 'no-store' });
       if (!response.ok) throw new Error('Không thể tải dữ liệu website.');
       const content = await response.json();
-      const path = normalizePath(window.location.pathname);
-      window.siteContent = content;
-      applySiteSettings(content.site);
-      applyPageFields(content.pageFields || [], path);
-      if (path === '/san-pham') renderCatalog(content.products || []);
-      if (path === '/') renderHomeProducts(content.products || [], content.homeProductIds || []);
-      renderCustomSections(content.customSections || [], path);
-      document.dispatchEvent(new CustomEvent('cms:ready', { detail: content }));
+      localStorage.setItem(CONTENT_CACHE_KEY, JSON.stringify(content));
+      if (!cachedContent || cachedContent.updatedAt !== content.updatedAt) renderContent(content);
     } catch (error) {
       console.warn(error.message);
-      document.dispatchEvent(new CustomEvent('cms:error', { detail: error }));
+      if (!cachedContent) document.dispatchEvent(new CustomEvent('cms:error', { detail: error }));
     }
   }
 
